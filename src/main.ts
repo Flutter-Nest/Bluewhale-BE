@@ -1,13 +1,14 @@
-import { NestFactory, Reflector } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import { NestExpressApplication } from "@nestjs/platform-express";
-import { join } from "path";
 import { ClassSerializerInterceptor, ValidationPipe } from "@nestjs/common";
-import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
+import { NestFactory, Reflector } from "@nestjs/core";
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { join } from "path";
+import { AppModule } from "./app.module";
 import { ResponseDelayInterceptor } from "./core/interceptor/response-delay.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const PORT = process.env.PORT || 3001;
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalInterceptors(new ResponseDelayInterceptor());
@@ -24,7 +25,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup("api", app, document);
-  await app.listen(3000);
+
+  await app.listen(PORT);
 }
 
 bootstrap();
