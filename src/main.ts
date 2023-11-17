@@ -4,6 +4,7 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { join } from "path";
 import { AppModule } from "./app.module";
+import { HttpExceptionFilter } from "./common/exceptions/http-exception.filter";
 import { ResponseDelayInterceptor } from "./core/interceptor/response-delay.interceptor";
 
 async function bootstrap() {
@@ -12,6 +13,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalInterceptors(new ResponseDelayInterceptor());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle("Flutter-Nest")

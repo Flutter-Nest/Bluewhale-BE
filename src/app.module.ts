@@ -5,9 +5,11 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import { CacheModule } from "./cache/cache.module";
+import { LoggerMiddleware } from "./common/middlewares/logger.middleware";
 import { CoreModule } from "./core/core.module";
 import { ResponseDelayInterceptor } from "./core/interceptor/response-delay.interceptor";
 import { OrderModule } from "./order/order.module";
+import { PrismaModule } from "./prisma/prisma.module";
 import { ProductModule } from "./product/product.module";
 import { RatingModule } from "./rating/rating.module";
 import { RestaurantModule } from "./restaurant/restaurant.module";
@@ -18,6 +20,7 @@ import { UserModule } from "./user/user.module";
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    PrismaModule,
     AuthModule,
     UserModule,
     ProductModule,
@@ -40,4 +43,8 @@ import { UserModule } from "./user/user.module";
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer) {
+    consumer.apply(LoggerMiddleware).forRoutes("*");
+  }
+}
