@@ -7,11 +7,11 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { User } from "src/common/decorators/user.decorator";
 import { AccessTokenGuard, BearerTokenGuard } from "../auth/bearer-token.guard";
 import { ApiBearerTokenHeader } from "../core/decorator/api-bearer-token-header";
 import { BasketItemWithFullProductDto } from "./dto/basket-item.dto";
 import { PatchMeBasketDto } from "./dto/patch-me-basket.dto";
-import { User } from "./entities/user.entity";
 import { UserService } from "./user.service";
 
 @ApiTags("user")
@@ -26,11 +26,10 @@ export class UserController {
   })
   @ApiOkResponse({
     description: "사용자 가져오기 성공",
-    type: User,
   })
   @ApiBearerTokenHeader()
-  async getMe(@Request() req): Promise<User> {
-    return this.userService.findById(req.user.id);
+  async getMe(@User() user) {
+    return this.userService.findUserById(user.userId);
   }
 
   @UseGuards(AccessTokenGuard)
