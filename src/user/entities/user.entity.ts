@@ -1,33 +1,33 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Exclude, Transform } from "class-transformer";
-import { BaseEntity } from "../../core/entity/base.entity";
-import { BasketItemWithFullProductDto } from "../dto/basket-item.dto";
+import { Users } from "@prisma/client";
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
-export class User extends BaseEntity {
-  constructor(params: User) {
-    super(params);
+export class UserEntity implements Users {
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({ type: Number, description: "id", example: "1" })
+  userId: number;
 
-    Object.assign(this, params);
-  }
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ type: String, description: "이름", example: "홍길동" })
+  userName: string;
 
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ type: String, description: "비밀번호", example: "asdf1234" })
+  password: string;
+
+  @IsNotEmpty()
+  @IsEmail()
   @ApiProperty({
-    name: "username",
-    description: "사용자 이메일",
+    type: String,
+    description: "이메일",
     example: "test@test.com",
   })
-  username: string;
+  email: string;
 
-  @Transform(({ value }) => `/img/${value}`)
-  @ApiProperty({
-    name: "imageUrl",
-    description: "프로필 이미지 URL",
-    example: "/img/logo.png",
-  })
-  imageUrl: string;
-
-  @Exclude()
-  basket: BasketItemWithFullProductDto[];
-
-  @Exclude()
-  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date | null;
 }
