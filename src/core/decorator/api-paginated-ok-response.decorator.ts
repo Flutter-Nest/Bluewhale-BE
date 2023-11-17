@@ -1,15 +1,14 @@
-import { applyDecorators, Type } from '@nestjs/common';
+import { applyDecorators, Type } from "@nestjs/common";
 import {
   ApiOkResponse,
   ApiResponseOptions,
   getSchemaPath,
-} from '@nestjs/swagger';
-import { Pagination, PaginationMeta } from '../entity/pagination.entity';
-import { BaseEntity } from '../entity/base.entity';
+} from "@nestjs/swagger";
+import { PaginationMeta } from "../entity/pagination.entity";
 
 export const ApiPaginatedOkResponseDecorator = <T extends Type<any>>(
   model: T,
-  options: ApiResponseOptions = {},
+  options: ApiResponseOptions = {}
 ) => {
   return applyDecorators(
     ApiOkResponse({
@@ -20,13 +19,13 @@ export const ApiPaginatedOkResponseDecorator = <T extends Type<any>>(
             $ref: getSchemaPath(PaginationMeta),
           },
           data: {
-            type: 'array',
+            type: "array",
             items: {
               $ref: getSchemaPath(model),
             },
           },
         },
       },
-    }),
+    })
   );
 };

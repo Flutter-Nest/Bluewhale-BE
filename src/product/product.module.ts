@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { ProductController } from './product.controller';
-import { AuthModule } from '../auth/auth.module';
-import { UserModule } from '../user/user.module';
-import { CacheModule } from '../cache/cache.module';
-import { CoreModule } from '../core/core.module';
+import { Module } from "@nestjs/common";
+import { AuthModule } from "../auth/auth.module";
+import { CacheModule } from "../cache/cache.module";
+import { CoreModule } from "../core/core.module";
+import { UserModule } from "../user/user.module";
+import { ProductController } from "./product.controller";
+import { ProductService } from "./product.service";
 
 @Module({
   imports: [AuthModule, UserModule, CacheModule, CoreModule],

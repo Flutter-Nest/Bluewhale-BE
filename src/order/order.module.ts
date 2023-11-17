@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { OrderService } from './order.service';
-import { OrderController } from './order.controller';
-import { CacheModule } from '../cache/cache.module';
-import { AuthModule } from '../auth/auth.module';
-import { CoreModule } from '../core/core.module';
+import { Module } from "@nestjs/common";
+import { AuthModule } from "../auth/auth.module";
+import { CacheModule } from "../cache/cache.module";
+import { CoreModule } from "../core/core.module";
+import { OrderController } from "./order.controller";
+import { OrderService } from "./order.service";
 
 @Module({
   controllers: [OrderController],

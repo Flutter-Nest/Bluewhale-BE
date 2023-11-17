@@ -1,14 +1,9 @@
-import { BaseEntity } from '../../core/entity/base.entity';
-import { Product } from '../../product/entities/product.entity';
-import { IBasketItem } from '../../user/entities/user.entity.interface';
-import { User } from '../../user/entities/user.entity';
-import { Exclude } from 'class-transformer';
-import { Restaurant } from '../../restaurant/entities/restaurant.entity';
-import {
-  BasketItemDto,
-  BasketItemWithFullProductDto,
-} from '../../user/dto/basket-item.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
+import { Exclude } from "class-transformer";
+import { BaseEntity } from "../../core/entity/base.entity";
+import { Restaurant } from "../../restaurant/entities/restaurant.entity";
+import { BasketItemWithFullProductDto } from "../../user/dto/basket-item.dto";
+import { User } from "../../user/entities/user.entity";
 
 export class Order extends BaseEntity {
   constructor(params: Order) {
@@ -21,30 +16,30 @@ export class Order extends BaseEntity {
   user: User;
 
   @ApiProperty({
-    name: 'products',
+    name: "products",
     isArray: true,
     type: BasketItemWithFullProductDto,
-    description: '장바구니 상품',
+    description: "장바구니 상품",
   })
   products: BasketItemWithFullProductDto[];
 
   @ApiProperty({
-    name: 'restaurant',
+    name: "restaurant",
     type: Restaurant,
-    description: '레스토랑 정보',
+    description: "레스토랑 정보",
   })
   restaurant: Restaurant;
 
   @ApiProperty({
-    name: 'totalPrice',
-    description: '총 금액',
+    name: "totalPrice",
+    description: "총 금액",
     example: 10000,
   })
   totalPrice: number;
 
   @ApiProperty({
-    name: 'createdAt',
-    description: '생성일자',
+    name: "createdAt",
+    description: "생성일자",
   })
   createdAt: string;
 }

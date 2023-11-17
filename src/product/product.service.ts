@@ -1,16 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { Product } from './entities/product.entity';
-import { CacheService } from '../cache/cache.service';
-import { CoreService } from '../core/core.service';
-import { Pagination } from '../core/entity/pagination.entity';
-import { PaginationDto } from '../core/dto/pagination.dto';
-import { ProductModule } from './product.module';
+import { Injectable } from "@nestjs/common";
+import { CacheService } from "../cache/cache.service";
+import { CoreService } from "../core/core.service";
+import { PaginationDto } from "../core/dto/pagination.dto";
+import { Pagination } from "../core/entity/pagination.entity";
+import { Product } from "./entities/product.entity";
 
 @Injectable()
 export class ProductService {
   constructor(
     private cacheService: CacheService,
-    private coreService: CoreService,
+    private coreService: CoreService
   ) {}
 
   getAllProducts(): Product[] {
@@ -24,7 +23,7 @@ export class ProductService {
   paginateProducts(paginationDto: PaginationDto): Pagination<Product> {
     const result = this.coreService.paginate<Product>(
       this.cacheService.products,
-      paginationDto,
+      paginationDto
     );
 
     return {

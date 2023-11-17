@@ -1,15 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { User } from '../user/entities/user.entity';
-import { UserService } from '../user/user.service';
-import { JwtService } from '@nestjs/jwt';
-import { CacheService } from '../cache/cache.service';
+import { Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import { CacheService } from "../cache/cache.service";
+import { User } from "../user/entities/user.entity";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private cacheService: CacheService,
     private userService: UserService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   verifyToken(token: string) {
@@ -24,7 +24,7 @@ export class AuthService {
         username: decoded.username,
         id: decoded.sub,
       },
-      false,
+      false
     );
   }
 
@@ -32,11 +32,11 @@ export class AuthService {
     const payload = {
       username: user.username,
       sub: user.id,
-      type: isRefreshToken ? 'refresh' : 'access',
+      type: isRefreshToken ? "refresh" : "access",
     };
 
     return this.jwtService.sign(payload, {
-      expiresIn: isRefreshToken ? '1d' : '300s',
+      expiresIn: isRefreshToken ? "1d" : "300s",
     });
   }
 

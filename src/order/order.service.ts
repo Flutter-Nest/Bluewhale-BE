@@ -1,24 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { CacheService } from '../cache/cache.service';
-import { User } from '../user/entities/user.entity';
-import { Order } from './entities/order.entity';
-import { CoreService } from '../core/core.service';
-import { PaginationDto } from '../core/dto/pagination.dto';
-import { Pagination } from '../core/entity/pagination.entity';
-import { OrderProduct } from './entities/order-product-entity';
+import { Injectable } from "@nestjs/common";
+import { CacheService } from "../cache/cache.service";
+import { CoreService } from "../core/core.service";
+import { PaginationDto } from "../core/dto/pagination.dto";
+import { Pagination } from "../core/entity/pagination.entity";
+import { User } from "../user/entities/user.entity";
+import { CreateOrderDto } from "./dto/create-order.dto";
+import { OrderProduct } from "./entities/order-product-entity";
+import { Order } from "./entities/order.entity";
 
 @Injectable()
 export class OrderService {
   constructor(
     private cacheService: CacheService,
-    private coreService: CoreService,
+    private coreService: CoreService
   ) {}
 
   paginateOrders(user: User, paginationDto: PaginationDto): Pagination<Order> {
     const result = this.coreService.paginate(
       this.cacheService.orders,
-      paginationDto,
+      paginationDto
     );
 
     return {
@@ -32,13 +32,13 @@ export class OrderService {
       id: createOrderDto.id,
       user,
       restaurant: this.cacheService.products.find(
-        (x) => createOrderDto.products[0].productId === x.id,
+        (x) => createOrderDto.products[0].productId === x.id
       ).restaurant,
       products: createOrderDto.products.map((basketItem) => ({
         product: new OrderProduct(
           this.cacheService.products.find(
-            (product) => basketItem.productId === product.id,
-          ),
+            (product) => basketItem.productId === product.id
+          )
         ),
         count: basketItem.count,
       })),

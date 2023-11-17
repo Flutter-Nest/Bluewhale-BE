@@ -4,9 +4,8 @@ import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
-} from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+} from "@nestjs/common";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class BasicTokenGuard implements CanActivate {
@@ -15,26 +14,26 @@ export class BasicTokenGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
 
-    const rawToken = req.headers['authorization'];
+    const rawToken = req.headers["authorization"];
 
     if (!rawToken) {
-      throw new BadRequestException('토큰이 없습니다.');
+      throw new BadRequestException("토큰이 없습니다.");
     }
 
-    const splitToken = rawToken.split(' ');
+    const splitToken = rawToken.split(" ");
 
-    if (splitToken.length !== 2 || splitToken[0] !== 'Basic') {
-      throw new ForbiddenException('잘못된 토큰입니다.');
+    if (splitToken.length !== 2 || splitToken[0] !== "Basic") {
+      throw new ForbiddenException("잘못된 토큰입니다.");
     }
 
     const token = splitToken[1];
 
-    const decoded = Buffer.from(token, 'base64').toString('utf8');
+    const decoded = Buffer.from(token, "base64").toString("utf8");
 
-    const split = decoded.split(':');
+    const split = decoded.split(":");
 
     if (split.length !== 2) {
-      throw new BadRequestException('잘못된 토큰입니다.');
+      throw new BadRequestException("잘못된 토큰입니다.");
     }
 
     const username = split[0];
@@ -43,7 +42,7 @@ export class BasicTokenGuard implements CanActivate {
     const user = await this.authService.authenticate(username, password);
 
     if (!user) {
-      throw new ForbiddenException('비밀번호가 틀렸습니다.');
+      throw new ForbiddenException("비밀번호가 틀렸습니다.");
     }
 
     req.user = user;

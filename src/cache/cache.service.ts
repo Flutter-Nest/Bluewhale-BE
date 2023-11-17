@@ -1,4 +1,14 @@
+import { faker } from "@faker-js/faker";
 import { Injectable } from "@nestjs/common";
+import { v4 as uuidv4, v5 as uuidv5 } from "uuid";
+import { Order } from "../order/entities/order.entity";
+import { Product } from "../product/entities/product.entity";
+import { Rating } from "../rating/entities/rating.entity";
+import {
+  Restaurant,
+  RestaurantDetail,
+} from "../restaurant/entities/restaurant.entity";
+import { User } from "../user/entities/user.entity";
 import {
   chicken,
   ddeokBokGi,
@@ -9,18 +19,8 @@ import {
   steak,
   sushi,
 } from "./product.data";
-import { Product } from "../product/entities/product.entity";
-import { v5 as uuidv5, v4 as uuidv4 } from "uuid";
-import {
-  Restaurant,
-  RestaurantDetail,
-} from "../restaurant/entities/restaurant.entity";
-import { restaurants } from "./restaurant.data";
-import { Rating } from "../rating/entities/rating.entity";
-import { User } from "../user/entities/user.entity";
-import { faker } from "@faker-js/faker";
 import { fiveStarRatings, fourStarRatings } from "./rating.data";
-import { Order } from "../order/entities/order.entity";
+import { restaurants } from "./restaurant.data";
 
 const uuidNamespace = "6dbe4c21-009b-4b22-a9be-1c3eca2bc9ea";
 

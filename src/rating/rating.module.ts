@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { RatingService } from './rating.service';
-import { RatingController } from './rating.controller';
-import { AuthModule } from '../auth/auth.module';
-import { CoreModule } from '../core/core.module';
-import { CacheModule } from '../cache/cache.module';
+import { Module } from "@nestjs/common";
+import { AuthModule } from "../auth/auth.module";
+import { CacheModule } from "../cache/cache.module";
+import { CoreModule } from "../core/core.module";
+import { RatingController } from "./rating.controller";
+import { RatingService } from "./rating.service";
 
 @Module({
   imports: [AuthModule, CoreModule, CacheModule],

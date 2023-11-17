@@ -1,48 +1,44 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Request,
   Query,
-} from '@nestjs/common';
-import { OrderService } from './order.service';
-import { AccessTokenGuard } from '../auth/bearer-token.guard';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { PaginationDto } from '../core/dto/pagination.dto';
-import { Product } from '../product/entities/product.entity';
-import { Pagination } from '../core/entity/pagination.entity';
-import { Order } from './entities/order.entity';
+  Request,
+  UseGuards,
+} from "@nestjs/common";
 import {
   ApiBody,
   ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
-} from '@nestjs/swagger';
-import { ApiPaginatedOkResponseDecorator } from '../core/decorator/api-paginated-ok-response.decorator';
+} from "@nestjs/swagger";
+import { AccessTokenGuard } from "../auth/bearer-token.guard";
+import { ApiPaginatedOkResponseDecorator } from "../core/decorator/api-paginated-ok-response.decorator";
+import { PaginationDto } from "../core/dto/pagination.dto";
+import { Pagination } from "../core/entity/pagination.entity";
+import { CreateOrderDto } from "./dto/create-order.dto";
+import { Order } from "./entities/order.entity";
+import { OrderService } from "./order.service";
 
-@ApiTags('order')
+@ApiTags("order")
 @ApiExtraModels(PaginationDto, Order)
-@Controller('order')
+@Controller("order")
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @UseGuards(AccessTokenGuard)
   @ApiOperation({
-    summary: '주문 Pagination',
+    summary: "주문 Pagination",
   })
   @ApiPaginatedOkResponseDecorator(Order, {
-    description: 'Pagination 결과',
+    description: "Pagination 결과",
   })
   @Get()
   paginateOrder(
     @Request() req,
-    @Query() paginationDto: PaginationDto,
+    @Query() paginationDto: PaginationDto
   ): Pagination<Order> {
     return this.orderService.paginateOrders(req.user, paginationDto);
   }
@@ -50,7 +46,7 @@ export class OrderController {
   @UseGuards(AccessTokenGuard)
   @Post()
   @ApiOperation({
-    summary: '주문 생성하기',
+    summary: "주문 생성하기",
   })
   @ApiBody({
     type: CreateOrderDto,

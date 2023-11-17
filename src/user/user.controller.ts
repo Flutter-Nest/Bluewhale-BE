@@ -1,48 +1,31 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  Body,
   Patch,
-  Param,
   Request,
-  Delete,
   UseGuards,
-} from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { AccessTokenGuard, BearerTokenGuard } from '../auth/bearer-token.guard';
-import { User } from './entities/user.entity';
-import { Product } from '../product/entities/product.entity';
-import {
-  BasketItemDto,
-  BasketItemWithFullProductDto,
-} from './dto/basket-item.dto';
-import { IBasketItem } from './entities/user.entity.interface';
-import { PatchMeBasketDto } from './dto/patch-me-basket.dto';
-import {
-  ApiBody,
-  ApiHeader,
-  ApiOkResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { ApiBearerTokenHeader } from '../core/decorator/api-bearer-token-header';
+} from "@nestjs/common";
+import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { AccessTokenGuard, BearerTokenGuard } from "../auth/bearer-token.guard";
+import { ApiBearerTokenHeader } from "../core/decorator/api-bearer-token-header";
+import { BasketItemWithFullProductDto } from "./dto/basket-item.dto";
+import { PatchMeBasketDto } from "./dto/patch-me-basket.dto";
+import { User } from "./entities/user.entity";
+import { UserService } from "./user.service";
 
-@ApiTags('user')
-@Controller('user')
+@ApiTags("user")
+@Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(BearerTokenGuard)
-  @Get('me')
+  @Get("me")
   @ApiOperation({
-    summary: '토큰을 기준으로 현재 사용자 정보를 가져옵니다.',
+    summary: "토큰을 기준으로 현재 사용자 정보를 가져옵니다.",
   })
   @ApiOkResponse({
-    description: '사용자 가져오기 성공',
+    description: "사용자 가져오기 성공",
     type: User,
   })
   @ApiBearerTokenHeader()
@@ -51,12 +34,12 @@ export class UserController {
   }
 
   @UseGuards(AccessTokenGuard)
-  @Get('me/basket')
+  @Get("me/basket")
   @ApiOperation({
-    summary: '현재 사용자의 장바구니를 가져옵니다.',
+    summary: "현재 사용자의 장바구니를 가져옵니다.",
   })
   @ApiOkResponse({
-    description: '장바구니 가져오기 성공',
+    description: "장바구니 가져오기 성공",
     type: BasketItemWithFullProductDto,
     isArray: true,
   })
@@ -66,12 +49,12 @@ export class UserController {
   }
 
   @UseGuards(AccessTokenGuard)
-  @Patch('me/basket')
+  @Patch("me/basket")
   @ApiOperation({
-    summary: '현재 사용자의 장바구니를 업데이트합니다.',
+    summary: "현재 사용자의 장바구니를 업데이트합니다.",
   })
   @ApiOkResponse({
-    description: '장바구니 업데이트 성공',
+    description: "장바구니 업데이트 성공",
     type: BasketItemWithFullProductDto,
     isArray: true,
   })
@@ -80,7 +63,7 @@ export class UserController {
   })
   async patchMeBasket(
     @Request() req,
-    @Body() body: PatchMeBasketDto,
+    @Body() body: PatchMeBasketDto
   ): Promise<BasketItemWithFullProductDto[]> {
     console.log(req.body);
     console.log(body);

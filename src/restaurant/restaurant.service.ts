@@ -1,23 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRestaurantDto } from './dto/create-restaurant.dto';
-import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
-import { PaginationDto } from '../core/dto/pagination.dto';
-import { Pagination } from '../core/entity/pagination.entity';
-import { Restaurant, RestaurantDetail } from './entities/restaurant.entity';
-import { CoreService } from '../core/core.service';
-import { CacheService } from '../cache/cache.service';
+import { Injectable } from "@nestjs/common";
+import { CacheService } from "../cache/cache.service";
+import { CoreService } from "../core/core.service";
+import { PaginationDto } from "../core/dto/pagination.dto";
+import { Pagination } from "../core/entity/pagination.entity";
+import { Restaurant, RestaurantDetail } from "./entities/restaurant.entity";
 
 @Injectable()
 export class RestaurantService {
   constructor(
     private coreService: CoreService,
-    private cacheService: CacheService,
+    private cacheService: CacheService
   ) {}
 
   paginateRestaurants(paginationDto: PaginationDto): Pagination<Restaurant> {
     const result = this.coreService.paginate(
       this.cacheService.restaurants,
-      paginationDto,
+      paginationDto
     );
 
     return {

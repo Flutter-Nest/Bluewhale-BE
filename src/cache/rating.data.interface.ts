@@ -1,3 +1,3 @@
-import { Rating } from '../rating/entities/rating.entity';
+import { Rating } from "../rating/entities/rating.entity";
 
-export type IRatingRaw = Omit<Rating, 'id' | 'restaurant' | 'user' | 'imgUrls'>;
+export type IRatingRaw = Omit<Rating, "id" | "restaurant" | "user" | "imgUrls">;

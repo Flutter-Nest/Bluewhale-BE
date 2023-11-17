@@ -1,64 +1,45 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { BasicTokenGuard } from './basic-token.guard';
-import { BearerTokenGuard, RefreshTokenGuard } from './bearer-token.guard';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { UserService } from '../user/user.service';
-import {
-  ApiHeader,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Controller, Post, Request, UseGuards } from "@nestjs/common";
+import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
   ApiBasicTokenHeader,
   ApiBearerTokenHeader,
-} from '../core/decorator/api-bearer-token-header';
+} from "../core/decorator/api-bearer-token-header";
+import { UserService } from "../user/user.service";
+import { AuthService } from "./auth.service";
+import { BasicTokenGuard } from "./basic-token.guard";
+import { RefreshTokenGuard } from "./bearer-token.guard";
 
-@ApiTags('auth')
-@Controller('auth')
+@ApiTags("auth")
+@Controller("auth")
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService,
+    private readonly userService: UserService
   ) {}
 
   @ApiOperation({
-    summary: 'Login하기',
+    summary: "Login하기",
   })
   @ApiBasicTokenHeader()
   @ApiOkResponse({
-    description: 'Access Token과 Refresh Token',
+    description: "Access Token과 Refresh Token",
     schema: {
       properties: {
         accessToken: {
-          type: 'string',
-          example: 'asdiofjzxl;ckvjoiasjewr.asdfoiasjdflkajsdf.asdfivjiaosdjf',
-          description: 'Access Token',
+          type: "string",
+          example: "asdiofjzxl;ckvjoiasjewr.asdfoiasjdflkajsdf.asdfivjiaosdjf",
+          description: "Access Token",
         },
         refreshToken: {
-          type: 'string',
-          example: 'asdiofjzxl;ckvjoiasjewr.asdfoiasjdflkajsdf.asdfivjiaosdjf',
-          description: 'Refresh Token',
+          type: "string",
+          example: "asdiofjzxl;ckvjoiasjewr.asdfoiasjdflkajsdf.asdfivjiaosdjf",
+          description: "Refresh Token",
         },
       },
     },
   })
   @UseGuards(BasicTokenGuard)
-  @Post('login')
+  @Post("login")
   async login(@Request() req) {
     return this.authService.login(req.user);
   }
@@ -69,23 +50,23 @@ export class AuthController {
   // }
 
   @ApiOperation({
-    summary: 'Token Refresh하기',
+    summary: "Token Refresh하기",
   })
   @ApiBearerTokenHeader()
   @ApiOkResponse({
-    description: 'Access Token',
+    description: "Access Token",
     schema: {
       properties: {
         accessToken: {
-          type: 'string',
-          example: 'asdiofjzxl;ckvjoiasjewr.asdfoiasjdflkajsdf.asdfivjiaosdjf',
-          description: 'Access Token',
+          type: "string",
+          example: "asdiofjzxl;ckvjoiasjewr.asdfoiasjdflkajsdf.asdfivjiaosdjf",
+          description: "Access Token",
         },
       },
     },
   })
   @UseGuards(RefreshTokenGuard)
-  @Post('token')
+  @Post("token")
   async token(@Request() req) {
     return {
       accessToken: await this.authService.rotateAccessToken(req.token),

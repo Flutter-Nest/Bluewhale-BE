@@ -1,7 +1,6 @@
-import { BaseEntity } from '../../core/entity/base.entity';
-import { Restaurant } from '../../restaurant/entities/restaurant.entity';
-import { Transform } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
+import { BaseEntity } from "../../core/entity/base.entity";
 
 export class OrderProduct extends BaseEntity {
   constructor(params: OrderProduct) {
@@ -14,30 +13,30 @@ export class OrderProduct extends BaseEntity {
   }
 
   @ApiProperty({
-    name: 'name',
-    description: '이름',
-    example: '떡볶이',
+    name: "name",
+    description: "이름",
+    example: "떡볶이",
   })
   name: string;
 
   @Transform(({ value }) => `/img/${value}`)
   @ApiProperty({
-    name: 'imgUrl',
-    description: '이미지 URL',
-    example: '/img/img.png',
+    name: "imgUrl",
+    description: "이미지 URL",
+    example: "/img/img.png",
   })
   imgUrl: string;
 
   @ApiProperty({
-    name: 'detail',
-    description: '상품 상세설명',
-    example: '맛있는 떡볶이',
+    name: "detail",
+    description: "상품 상세설명",
+    example: "맛있는 떡볶이",
   })
   detail: string;
 
   @ApiProperty({
-    name: 'price',
-    description: '가격',
+    name: "price",
+    description: "가격",
     example: 8000,
   })
   price: number;

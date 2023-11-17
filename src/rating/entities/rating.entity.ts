@@ -1,8 +1,8 @@
-import { BaseEntity } from '../../core/entity/base.entity';
-import { Exclude, Transform } from 'class-transformer';
-import { Restaurant } from '../../restaurant/entities/restaurant.entity';
-import { User } from '../../user/entities/user.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
+import { Exclude, Transform } from "class-transformer";
+import { BaseEntity } from "../../core/entity/base.entity";
+import { Restaurant } from "../../restaurant/entities/restaurant.entity";
+import { User } from "../../user/entities/user.entity";
 
 export class Rating extends BaseEntity {
   constructor(params: Rating) {
@@ -12,8 +12,8 @@ export class Rating extends BaseEntity {
   }
 
   @ApiProperty({
-    name: 'user',
-    description: '평점 작성한 유저',
+    name: "user",
+    description: "평점 작성한 유저",
     type: User,
   })
   user: User;
@@ -22,16 +22,16 @@ export class Rating extends BaseEntity {
   restaurant: Restaurant;
 
   @ApiProperty({
-    name: 'rating',
+    name: "rating",
     example: 5,
-    description: '평점',
+    description: "평점",
   })
   rating: number;
 
   @ApiProperty({
-    name: 'content',
-    description: '평가 내용',
-    example: '너무 맛있어요~',
+    name: "content",
+    description: "평가 내용",
+    example: "너무 맛있어요~",
   })
   content: string;
 
@@ -39,9 +39,9 @@ export class Rating extends BaseEntity {
   @ApiProperty({
     isArray: true,
     type: String,
-    name: 'imgUrls',
-    description: '이미지 URL',
-    example: ['/img/test.png'],
+    name: "imgUrls",
+    description: "이미지 URL",
+    example: ["/img/test.png"],
   })
   imgUrls: string[];
 }

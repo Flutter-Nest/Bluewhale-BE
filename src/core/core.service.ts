@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { BaseEntity } from './entity/base.entity';
-import { PaginationDto } from './dto/pagination.dto';
-import { Pagination } from './entity/pagination.entity';
+import { Injectable } from "@nestjs/common";
+import { PaginationDto } from "./dto/pagination.dto";
+import { BaseEntity } from "./entity/base.entity";
+import { Pagination } from "./entity/pagination.entity";
 
 @Injectable()
 export class CoreService {
   paginate<T extends BaseEntity>(
     items: T[],
-    paginationDto: PaginationDto,
+    paginationDto: PaginationDto
   ): Pagination<T> {
     const copyItems = [...items];
     const startIdx = paginationDto.after
@@ -16,7 +16,7 @@ export class CoreService {
 
     const plusOneData = copyItems.splice(
       startIdx === 0 ? startIdx : startIdx + 1,
-      paginationDto.count + 1,
+      paginationDto.count + 1
     );
     const hasMore = plusOneData.length > paginationDto.count;
 

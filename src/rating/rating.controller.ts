@@ -1,17 +1,7 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
-import { RatingService } from './rating.service';
+import { Controller } from "@nestjs/common";
+import { RatingService } from "./rating.service";
 
-@Controller('rating')
+@Controller("rating")
 export class RatingController {
   constructor(private readonly ratingService: RatingService) {}
 
