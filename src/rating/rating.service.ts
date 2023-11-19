@@ -7,7 +7,6 @@ import { CoreService } from "../core/core.service";
 import { PaginationDto } from "../core/dto/pagination.dto";
 import { Pagination } from "../core/entity/pagination.entity";
 import { CreateRestaurantRatingDto } from "../restaurant/dto/create-restaurant-rating.dto";
-import { User } from "../user/entities/user.entity";
 import { Rating } from "./entities/rating.entity";
 
 @Injectable()
@@ -32,7 +31,7 @@ export class RatingService {
   }
 
   createRestaurantRating(
-    user: User,
+    user,
     restaurantId: string,
     createRatingDto: CreateRestaurantRatingDto
   ): Rating {

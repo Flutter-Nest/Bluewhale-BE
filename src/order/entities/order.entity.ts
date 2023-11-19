@@ -3,7 +3,6 @@ import { Exclude } from "class-transformer";
 import { BaseEntity } from "../../core/entity/base.entity";
 import { Restaurant } from "../../restaurant/entities/restaurant.entity";
 import { BasketItemWithFullProductDto } from "../../user/dto/basket-item.dto";
-import { User } from "../../user/entities/user.entity";
 
 export class Order extends BaseEntity {
   constructor(params: Order) {
@@ -13,7 +12,7 @@ export class Order extends BaseEntity {
   }
 
   @Exclude()
-  user: User;
+  user;
 
   @ApiProperty({
     name: "products",

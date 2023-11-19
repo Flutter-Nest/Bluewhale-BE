@@ -2,7 +2,6 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Exclude, Transform } from "class-transformer";
 import { BaseEntity } from "../../core/entity/base.entity";
 import { Restaurant } from "../../restaurant/entities/restaurant.entity";
-import { User } from "../../user/entities/user.entity";
 
 export class Rating extends BaseEntity {
   constructor(params: Rating) {
@@ -14,9 +13,9 @@ export class Rating extends BaseEntity {
   @ApiProperty({
     name: "user",
     description: "평점 작성한 유저",
-    type: User,
+    // type: User,
   })
-  user: User;
+  user;
 
   @Exclude()
   restaurant: Restaurant;

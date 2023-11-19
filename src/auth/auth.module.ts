@@ -13,7 +13,7 @@ import { JwtStrategy } from "./jwt.strategy";
     PassportModule,
     CacheModule,
     JwtModule.register({
-      secret: "codefactory",
+      secret: "customized_secret_key",
     }),
   ],
   controllers: [AuthController],

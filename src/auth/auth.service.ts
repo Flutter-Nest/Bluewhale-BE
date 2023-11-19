@@ -1,13 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { CacheService } from "../cache/cache.service";
-import { User } from "../user/entities/user.entity";
 import { UserService } from "../user/user.service";
 
 @Injectable()
 export class AuthService {
   constructor(
-    private cacheService: CacheService,
     private userService: UserService,
     private jwtService: JwtService
   ) {}
@@ -22,7 +19,7 @@ export class AuthService {
     return this.signToken(
       {
         username: decoded.username,
-        id: decoded.sub,
+        userId: decoded.userId,
       },
       false
     );
@@ -30,8 +27,8 @@ export class AuthService {
 
   signToken(user: any, isRefreshToken: boolean): string {
     const payload = {
-      username: user.username,
-      sub: user.id,
+      username: user.userName,
+      userId: user.userId,
       type: isRefreshToken ? "refresh" : "access",
     };
 
@@ -40,21 +37,21 @@ export class AuthService {
     });
   }
 
-  async authenticate(username: string, password: string): Promise<User | null> {
-    const user = await this.userService.findByUsername(username);
+  async authenticate(email: string, password: string) {
+    const user = await this.userService.findUserByEmail(email);
 
     if (!user) {
-      return null;
+      return new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
     if (user.password !== password) {
-      return null;
+      return new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
     return user;
   }
 
-  async login(user: User) {
+  async login(user) {
     return {
       refreshToken: this.signToken(user, true),
       accessToken: this.signToken(user, false),

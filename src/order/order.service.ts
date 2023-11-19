@@ -3,7 +3,6 @@ import { CacheService } from "../cache/cache.service";
 import { CoreService } from "../core/core.service";
 import { PaginationDto } from "../core/dto/pagination.dto";
 import { Pagination } from "../core/entity/pagination.entity";
-import { User } from "../user/entities/user.entity";
 import { CreateOrderDto } from "./dto/create-order.dto";
 import { OrderProduct } from "./entities/order-product-entity";
 import { Order } from "./entities/order.entity";
@@ -15,7 +14,7 @@ export class OrderService {
     private coreService: CoreService
   ) {}
 
-  paginateOrders(user: User, paginationDto: PaginationDto): Pagination<Order> {
+  paginateOrders(user, paginationDto: PaginationDto): Pagination<Order> {
     const result = this.coreService.paginate(
       this.cacheService.orders,
       paginationDto
@@ -27,7 +26,7 @@ export class OrderService {
     };
   }
 
-  postOrder(user: User, createOrderDto: CreateOrderDto): Order {
+  postOrder(user, createOrderDto: CreateOrderDto): Order {
     const newOrder = new Order({
       id: createOrderDto.id,
       user,

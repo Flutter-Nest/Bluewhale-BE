@@ -31,15 +31,14 @@ export class BasicTokenGuard implements CanActivate {
     const decoded = Buffer.from(token, "base64").toString("utf8");
 
     const split = decoded.split(":");
-
     if (split.length !== 2) {
       throw new BadRequestException("잘못된 토큰입니다.");
     }
 
-    const username = split[0];
+    const email = split[0];
     const password = split[1];
 
-    const user = await this.authService.authenticate(username, password);
+    const user = await this.authService.authenticate(email, password);
 
     if (!user) {
       throw new ForbiddenException("비밀번호가 틀렸습니다.");

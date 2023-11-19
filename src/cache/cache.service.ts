@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4, v5 as uuidv5 } from "uuid";
 import { Order } from "../order/entities/order.entity";
@@ -8,7 +7,6 @@ import {
   Restaurant,
   RestaurantDetail,
 } from "../restaurant/entities/restaurant.entity";
-import { User } from "../user/entities/user.entity";
 import {
   chicken,
   ddeokBokGi,
@@ -19,7 +17,6 @@ import {
   steak,
   sushi,
 } from "./product.data";
-import { fiveStarRatings, fourStarRatings } from "./rating.data";
 import { restaurants } from "./restaurant.data";
 
 const uuidNamespace = "6dbe4c21-009b-4b22-a9be-1c3eca2bc9ea";
@@ -27,21 +24,21 @@ const uuidNamespace = "6dbe4c21-009b-4b22-a9be-1c3eca2bc9ea";
 @Injectable()
 export class CacheService {
   constructor() {
-    this.createUsers();
+    // this.createUsers();
     this.createRestaurants();
     this.createProducts();
-    this.createRatings();
+    // this.createRatings();
   }
 
-  users: User[] = [
-    new User({
-      id: "f55b32d2-4d68-4c1e-a3ca-da9d7d0d92e5",
-      username: "test@test.ai",
-      password: "testtest",
-      imageUrl: "",
-      basket: [],
-    }),
-  ];
+  // users = [
+  //   new User({
+  //     id: "f55b32d2-4d68-4c1e-a3ca-da9d7d0d92e5",
+  //     username: "test@test.ai",
+  //     password: "testtest",
+  //     imageUrl: "",
+  //     basket: [],
+  //   }),
+  // ];
 
   orders: Order[] = [];
 
@@ -165,60 +162,60 @@ export class CacheService {
     this.restaurants = raws;
   }
 
-  createRatings() {
-    const allRatings = [...fiveStarRatings, ...fourStarRatings];
+  // createRatings() {
+  //   const allRatings = [...fiveStarRatings, ...fourStarRatings];
 
-    for (const restaurant of this.restaurants) {
-      const randomInt = this.getRandomInt(100, 200);
+  //   for (const restaurant of this.restaurants) {
+  //     const randomInt = this.getRandomInt(100, 200);
 
-      const indexArr = new Array(randomInt).fill(0).map((_, index) => {
-        const randomImages = this.getImagesByRestaurantName(restaurant.name);
-        randomImages.sort(() => Math.random() - 0.5);
+  //     const indexArr = new Array(randomInt).fill(0).map((_, index) => {
+  //       const randomImages = this.getImagesByRestaurantName(restaurant.name);
+  //       randomImages.sort(() => Math.random() - 0.5);
 
-        return new Rating({
-          id: uuidv4(),
-          restaurant: restaurant,
-          imgUrls: index % 2 === 1 ? randomImages.slice(0, 5) : [],
-          user: this.users[index % this.users.length],
-          ...allRatings[index % allRatings.length],
-        });
-      });
+  //       return new Rating({
+  //         id: uuidv4(),
+  //         restaurant: restaurant,
+  //         imgUrls: index % 2 === 1 ? randomImages.slice(0, 5) : [],
+  //         user: this.users[index % this.users.length],
+  //         ...allRatings[index % allRatings.length],
+  //       });
+  //     });
 
-      this.ratings = [...this.ratings, ...indexArr];
-    }
+  //     this.ratings = [...this.ratings, ...indexArr];
+  //   }
 
-    this.restaurants = this.restaurants.map(
-      (restaurant) =>
-        new RestaurantDetail({
-          ...restaurant,
-          ratings: +this.ratings
-            .filter((rating) => rating.restaurant.id === restaurant.id)
-            .reduce(
-              (average, value, index, { length }) =>
-                index === length - 1
-                  ? (average + value.rating) / length
-                  : average + value.rating,
-              0
-            )
-            .toFixed(2),
-        })
-    );
-  }
+  //   this.restaurants = this.restaurants.map(
+  //     (restaurant) =>
+  //       new RestaurantDetail({
+  //         ...restaurant,
+  //         ratings: +this.ratings
+  //           .filter((rating) => rating.restaurant.id === restaurant.id)
+  //           .reduce(
+  //             (average, value, index, { length }) =>
+  //               index === length - 1
+  //                 ? (average + value.rating) / length
+  //                 : average + value.rating,
+  //             0
+  //           )
+  //           .toFixed(2),
+  //       })
+  //   );
+  // }
 
-  createUsers() {
-    for (let i = 0; i < 10000; i++) {
-      this.users = [
-        ...this.users,
-        new User({
-          id: uuidv4(),
-          username: faker.internet.email(),
-          password: faker.datatype.string(16),
-          imageUrl: "",
-          basket: [],
-        }),
-      ];
-    }
-  }
+  // createUsers() {
+  //   for (let i = 0; i < 10000; i++) {
+  //     this.users = [
+  //       ...this.users,
+  //       new User({
+  //         id: uuidv4(),
+  //         username: faker.internet.email(),
+  //         password: faker.datatype.string(16),
+  //         imageUrl: "",
+  //         basket: [],
+  //       }),
+  //     ];
+  //   }
+  // }
 
   getRandomInt(min, max): number {
     min = Math.ceil(min);
