@@ -41,7 +41,7 @@ export class BasicTokenGuard implements CanActivate {
     const user = await this.authService.authenticate(email, password);
 
     if (!user) {
-      throw new ForbiddenException("비밀번호가 틀렸습니다.");
+      throw new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
     req.user = user;

@@ -14,6 +14,7 @@ import { ProductModule } from "./product/product.module";
 import { RatingModule } from "./rating/rating.module";
 import { RestaurantModule } from "./restaurant/restaurant.module";
 import { UserModule } from "./user/user.module";
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { UserModule } from "./user/user.module";
     CoreModule,
     RatingModule,
     OrderModule,
+    ScheduleModule,
   ],
   controllers: [AppController],
   providers: [

@@ -39,7 +39,7 @@ export class BearerTokenGuard implements CanActivate {
       throw new UnauthorizedException("잘못된 토큰입니다.");
     }
 
-    if (!payload.sub) {
+    if (!payload.userId) {
       throw new UnauthorizedException("잘못된 토큰입니다.");
     }
 

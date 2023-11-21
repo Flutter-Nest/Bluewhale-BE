@@ -10,7 +10,8 @@ export class AuthService {
   ) {}
 
   verifyToken(token: string) {
-    return this.jwtService.verify(token);
+    const result = this.jwtService.verify(token);
+    return result;
   }
 
   async rotateAccessToken(refreshToken: string): Promise<string> {
