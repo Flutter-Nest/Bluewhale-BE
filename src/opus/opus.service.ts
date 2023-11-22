@@ -10,7 +10,7 @@ export class OpusService {
   ) {}
   async fetchOpus(userId: number, query) {
     const { grade, className } = await this.userService.findUserById(userId);
-    const result = await this.prisma.opus.findMany({
+    const rawResult = await this.prisma.opus.findMany({
       where: {
         grade,
         className,
@@ -21,12 +21,31 @@ export class OpusService {
       select: {
         opusId: true,
         teacher: true,
+        date: true,
         title: true,
+        content: true,
         grade: true,
         className: true,
+        time: true,
+        Subject: {
+          select: {
+            subjectColor: true,
+          },
+        },
       },
     });
-    console.log(result);
+
+    const result = rawResult.map((item) => ({
+      id: item.opusId,
+      teacher: item.teacher,
+      date: item.date,
+      title: item.title,
+      content: item.content,
+      grade: item.grade,
+      className: item.className,
+      time: item.time,
+      subjectColor: item.Subject.subjectColor,
+    }));
     return result;
   }
 }
