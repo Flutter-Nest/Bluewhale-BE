@@ -26,7 +26,10 @@ export class UserEntity implements Users {
     example: "test@test.com",
   })
   email: string;
+  grade: number;
+  className: string;
 
+  birth: Date;
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date | null;

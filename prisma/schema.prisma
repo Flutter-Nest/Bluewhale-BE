@@ -15,7 +15,7 @@ model Users {
   email      String    @db.VarChar(255)
   birth      DateTime?
   grade      Int      
-  class      String?   
+  className  String?   
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime? 
@@ -106,7 +106,7 @@ model Opus {
   teacher      String
   title        String
   grade        Int
-  class        String
+  className    String
   date         DateTime
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
