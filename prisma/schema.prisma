@@ -79,3 +79,20 @@ model Subjects {
 
   Schedules Schedules[]
 }
+
+model Interviews {
+  interviewId  Int       @id @default(autoincrement()) @map("id")
+  CACE         Int    
+  PIPO         Int    
+  RURD         Int
+  DT           Int
+  DP           Int
+  AE           Int
+  RF           Int
+  userId       Int
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime? 
+
+  User    Users    @relation(fields: [userId], references: [userId])
+}
