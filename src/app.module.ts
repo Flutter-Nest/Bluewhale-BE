@@ -16,6 +16,7 @@ import { RestaurantModule } from "./restaurant/restaurant.module";
 import { UserModule } from "./user/user.module";
 import { ScheduleModule } from './schedule/schedule.module';
 import { InterviewModule } from './interview/interview.module';
+import { OpusModule } from './opus/opus.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { InterviewModule } from './interview/interview.module';
     OrderModule,
     ScheduleModule,
     InterviewModule,
+    OpusModule,
   ],
   controllers: [AppController],
   providers: [

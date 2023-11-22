@@ -13,6 +13,9 @@ model Users {
   userName   String    @db.VarChar(15)
   password   String    @db.VarChar(255)
   email      String    @db.VarChar(255)
+  birth      DateTime?
+  grade      Int      
+  class      String?   
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime? 
@@ -20,6 +23,7 @@ model Users {
   SchoolTests SchoolTests[]
   MockTests   MockTests[]
   Schedules   Schedules[]
+  Interviews  Interviews[]
 }
 
 model SchoolTests {
@@ -96,3 +100,15 @@ model Interviews {
 
   User    Users    @relation(fields: [userId], references: [userId])
 }
+
+model Opus {
+  opusId       Int @id @default(autoincrement()) @map("id")
+  teacher      String
+  title        String
+  grade        Int
+  class        String
+  date         DateTime
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime? 
+} 
