@@ -54,7 +54,6 @@ export class ScheduleController {
   @Get(":scheduleId")
   async fetchOneSchedule(@Param("scheduleId") scheduleId) {
     const result = await this.scheduleService.fetchOneSchedule(+scheduleId);
-    console.log(result);
     return result;
   }
 }

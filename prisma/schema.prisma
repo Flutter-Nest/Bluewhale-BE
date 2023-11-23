@@ -31,10 +31,12 @@ model SchoolTests {
   id           Int       @id @default(autoincrement()) @map("id")
   userId       Int
   subject      String    @db.VarChar(255)
+  classHours   Int
   score        Int
   rank         Int
-  studentCount Int
+  totalStudent Int
   grade        Int
+  testType     Int
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime? 
