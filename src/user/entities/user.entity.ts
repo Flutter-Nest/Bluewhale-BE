@@ -28,6 +28,7 @@ export class UserEntity implements Users {
   email: string;
   grade: number;
   className: string;
+  profileUrl: string;
 
   birth: Date;
   createdAt: Date;

@@ -6,7 +6,17 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async findUserById(userId: number) {
-    return this.prisma.users.findFirst({ where: { userId } });
+    const result = await this.prisma.users.findFirst({
+      where: { userId },
+      select: {
+        userId: true,
+        userName: true,
+        grade: true,
+        className: true,
+        profileUrl: true,
+      },
+    });
+    return result;
   }
 
   async findUserByEmail(email: string) {
