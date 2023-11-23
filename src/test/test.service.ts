@@ -14,4 +14,24 @@ export class TestService {
     });
     return result;
   }
+
+  async createSchoolTest(body, userId: number) {
+    console.log(body, userId);
+
+    const result = await this.prisma.schoolTests.create({
+      data: {
+        userId,
+        subject: body.subject,
+        classHours: +body.classHours,
+        score: +body.score,
+        rank: +body.rank,
+        totalStudent: +body.totalStudent,
+        grade: +body.grade,
+        testType: +body.testType,
+      },
+    });
+
+    console.log(result);
+    return result;
+  }
 }

@@ -9,7 +9,7 @@ export class ScheduleService {
     const result = await this.prisma.schedules.create({
       data: {
         userId,
-        subjectId: body.colorId,
+        subjectId: body.subjectId,
         startTime: body.startTime,
         endTime: body.endTime,
         completion: body.completion,
