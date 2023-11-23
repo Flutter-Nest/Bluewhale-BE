@@ -8,15 +8,11 @@ import { CacheModule } from "./cache/cache.module";
 import { LoggerMiddleware } from "./common/middlewares/logger.middleware";
 import { CoreModule } from "./core/core.module";
 import { ResponseDelayInterceptor } from "./core/interceptor/response-delay.interceptor";
-import { OrderModule } from "./order/order.module";
+import { InterviewModule } from "./interview/interview.module";
+import { OpusModule } from "./opus/opus.module";
 import { PrismaModule } from "./prisma/prisma.module";
-import { ProductModule } from "./product/product.module";
-import { RatingModule } from "./rating/rating.module";
-import { RestaurantModule } from "./restaurant/restaurant.module";
+import { ScheduleModule } from "./schedule/schedule.module";
 import { UserModule } from "./user/user.module";
-import { ScheduleModule } from './schedule/schedule.module';
-import { InterviewModule } from './interview/interview.module';
-import { OpusModule } from './opus/opus.module';
 
 @Module({
   imports: [
@@ -26,12 +22,8 @@ import { OpusModule } from './opus/opus.module';
     PrismaModule,
     AuthModule,
     UserModule,
-    ProductModule,
     CacheModule,
-    RestaurantModule,
     CoreModule,
-    RatingModule,
-    OrderModule,
     ScheduleModule,
     InterviewModule,
     OpusModule,
