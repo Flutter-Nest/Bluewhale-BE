@@ -45,16 +45,18 @@ model SchoolTests {
 }
 
 model MockTests {
-  id           Int    @id @default(autoincrement()) @map("id")
-  userId       Int
-  subject      String @db.VarChar(255)
-  score        Int
-  rank         Int
-  studentCount Int
-  grade        Int
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime? 
+  id              Int    @id @default(autoincrement()) @map("id")
+  userId          Int
+  month           Int
+  subject         Int
+  originalScore   Int
+  standardScore   Int
+  percentage      Int
+  rank            Int
+  grade           Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime? 
 
   User Users @relation(fields: [userId], references: [userId])
 }

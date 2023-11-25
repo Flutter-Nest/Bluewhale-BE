@@ -39,4 +39,27 @@ export class TestController {
     );
     return result;
   }
+
+  @UseGuards(BearerTokenGuard)
+  @Get("/mock")
+  async fetchMockTests(
+    @Req() req,
+    @Query("grade") grade,
+    @Query("subject") subject
+  ) {
+    const result = await this.testService.fetchMockTests(
+      +grade,
+      +subject,
+      req.user.userId
+    );
+    return result;
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Post("/mock")
+  async createMockTest(@Body() body, @Req() req) {
+    console.log(body);
+    const result = await this.testService.createMockTest(body, req.user.userId);
+    return result;
+  }
 }

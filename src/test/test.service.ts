@@ -31,7 +31,34 @@ export class TestService {
       },
     });
 
-    console.log(result);
+    return result;
+  }
+
+  async fetchMockTests(grade: number, subject: number, userId: number) {
+    const result = await this.prisma.mockTests.findMany({
+      where: {
+        grade,
+        subject,
+        userId,
+      },
+    });
+    return result;
+  }
+
+  async createMockTest(body, userId: number) {
+    const result = await this.prisma.mockTests.create({
+      data: {
+        userId,
+        month: +body.month,
+        subject: body.subject,
+        rank: +body.rank,
+        grade: +body.grade,
+        percentage: +body.percentage,
+        originalScore: +body.originalScore,
+        standardScore: +body.standardScore,
+      },
+    });
+
     return result;
   }
 }
