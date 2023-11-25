@@ -15,7 +15,7 @@ export class TestController {
   constructor(private readonly testService: TestService) {}
 
   @UseGuards(BearerTokenGuard)
-  @Get()
+  @Get("/school")
   async fetchSchoolTests(
     @Req() req,
     @Query("grade") grade,
@@ -30,7 +30,7 @@ export class TestController {
   }
 
   @UseGuards(BearerTokenGuard)
-  @Post()
+  @Post("/school")
   async createSchoolTest(@Body() body, @Req() req) {
     console.log(body);
     const result = await this.testService.createSchoolTest(
