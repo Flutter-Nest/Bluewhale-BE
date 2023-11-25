@@ -4,7 +4,6 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
-import { CacheModule } from "./cache/cache.module";
 import { LoggerMiddleware } from "./common/middlewares/logger.middleware";
 import { CoreModule } from "./core/core.module";
 import { ResponseDelayInterceptor } from "./core/interceptor/response-delay.interceptor";
@@ -12,8 +11,8 @@ import { InterviewModule } from "./interview/interview.module";
 import { OpusModule } from "./opus/opus.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { ScheduleModule } from "./schedule/schedule.module";
+import { TestModule } from "./test/test.module";
 import { UserModule } from "./user/user.module";
-import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { TestModule } from './test/test.module';
     PrismaModule,
     AuthModule,
     UserModule,
-    CacheModule,
     CoreModule,
     ScheduleModule,
     InterviewModule,
