@@ -34,6 +34,33 @@ export class TestService {
     return result;
   }
 
+  async updateSchoolTest(body, userId, schoolTestId) {
+    const result = await this.prisma.schoolTests.update({
+      where: {
+        id: schoolTestId,
+      },
+      data: {
+        subject: body.subject,
+        classHours: +body.classHours,
+        score: +body.score,
+        rank: +body.rank,
+        totalStudent: +body.totalStudent,
+      },
+    });
+
+    return result;
+  }
+
+  async deleteSchoolTest(userId, schoolTestId) {
+    const result = await this.prisma.schoolTests.delete({
+      where: {
+        id: schoolTestId,
+      },
+    });
+
+    return result;
+  }
+
   async fetchMockTests(grade: number, subject: number, userId: number) {
     const result = await this.prisma.mockTests.findMany({
       where: {

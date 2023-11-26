@@ -41,6 +41,31 @@ export class TestController {
   }
 
   @UseGuards(BearerTokenGuard)
+  @Patch("/school/:schoolTestId")
+  async updateSchoolTest(
+    @Body() body,
+    @Req() req,
+    @Param("schoolTestId") schoolTestId
+  ) {
+    const result = await this.testService.updateSchoolTest(
+      body,
+      req.user.userId,
+      +schoolTestId
+    );
+    return result;
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Delete("/school/:schoolTestId")
+  async deleteSchoolTest(@Req() req, @Param("schoolTestId") schoolTestId) {
+    const result = await this.testService.deleteSchoolTest(
+      req.user.userId,
+      +schoolTestId
+    );
+    return result;
+  }
+
+  @UseGuards(BearerTokenGuard)
   @Get("/mock")
   async fetchMockTests(
     @Req() req,
