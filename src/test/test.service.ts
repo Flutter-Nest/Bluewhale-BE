@@ -88,4 +88,31 @@ export class TestService {
 
     return result;
   }
+
+  async updateMockTest(body, userId, mockTestId) {
+    const result = await this.prisma.mockTests.update({
+      where: {
+        id: mockTestId,
+      },
+      data: {
+        month: +body.month,
+        originalScore: +body.originalScore,
+        standardScore: +body.standardScore,
+        rank: +body.rank,
+        percentage: +body.totalStudent,
+      },
+    });
+
+    return result;
+  }
+
+  async deleteMockTest(userId, mockTestId) {
+    const result = await this.prisma.mockTests.delete({
+      where: {
+        id: mockTestId,
+      },
+    });
+
+    return result;
+  }
 }

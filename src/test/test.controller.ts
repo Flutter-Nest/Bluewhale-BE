@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -85,6 +88,31 @@ export class TestController {
   async createMockTest(@Body() body, @Req() req) {
     console.log(body);
     const result = await this.testService.createMockTest(body, req.user.userId);
+    return result;
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Patch("/mock/:mockTestId")
+  async updateMockTest(
+    @Body() body,
+    @Req() req,
+    @Param("mockTestId") mockTestId
+  ) {
+    const result = await this.testService.updateMockTest(
+      body,
+      req.user.userId,
+      +mockTestId
+    );
+    return result;
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Delete("/mock/:mockTestId")
+  async deleteMockTest(@Req() req, @Param("mockTestId") mockTestId) {
+    const result = await this.testService.deleteMockTest(
+      req.user.userId,
+      +mockTestId
+    );
     return result;
   }
 }
