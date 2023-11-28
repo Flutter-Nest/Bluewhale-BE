@@ -43,10 +43,7 @@ export class ScheduleController {
   @UseGuards(BearerTokenGuard)
   @Get()
   async fetchSchedules(@Req() req, @Query() query) {
-    const result = await this.scheduleService.fetchSchedules(
-      req.user.userId,
-      query
-    );
+    const result = await this.scheduleService.fetchSchedules(req.user.userId);
     return result;
   }
 

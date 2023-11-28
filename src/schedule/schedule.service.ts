@@ -21,13 +21,10 @@ export class ScheduleService {
     return result;
   }
 
-  async fetchSchedules(userId: number, query) {
+  async fetchSchedules(userId: number) {
     const rawResult = await this.prisma.schedules.findMany({
       where: {
         userId,
-        date: {
-          equals: query.date,
-        },
       },
       select: {
         id: true,

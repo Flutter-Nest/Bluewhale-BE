@@ -4,14 +4,13 @@ import { PrismaService } from "src/prisma/prisma.service";
 @Injectable()
 export class TestService {
   constructor(private prisma: PrismaService) {}
-  async fetchSchoolTests(grade: number, testType: number, userId: number) {
+  async fetchSchoolTests(userId: number) {
     const result = await this.prisma.schoolTests.findMany({
       where: {
-        grade,
-        testType,
         userId,
       },
     });
+    console.log(result);
     return result;
   }
 
@@ -61,11 +60,9 @@ export class TestService {
     return result;
   }
 
-  async fetchMockTests(grade: number, subject: number, userId: number) {
+  async fetchMockTests(userId: number) {
     const result = await this.prisma.mockTests.findMany({
       where: {
-        grade,
-        subject,
         userId,
       },
     });

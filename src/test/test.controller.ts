@@ -24,11 +24,7 @@ export class TestController {
     @Query("grade") grade,
     @Query("testType") testType
   ) {
-    const result = await this.testService.fetchSchoolTests(
-      +grade,
-      +testType,
-      req.user.userId
-    );
+    const result = await this.testService.fetchSchoolTests(req.user.userId);
     return result;
   }
 
@@ -75,11 +71,7 @@ export class TestController {
     @Query("grade") grade,
     @Query("subject") subject
   ) {
-    const result = await this.testService.fetchMockTests(
-      +grade,
-      +subject,
-      req.user.userId
-    );
+    const result = await this.testService.fetchMockTests(req.user.userId);
     return result;
   }
 
