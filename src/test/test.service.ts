@@ -96,7 +96,7 @@ export class TestService {
         originalScore: +body.originalScore,
         standardScore: +body.standardScore,
         rank: +body.rank,
-        percentage: +body.totalStudent,
+        percentage: +body.percentage,
       },
     });
 
