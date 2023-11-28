@@ -14,6 +14,7 @@ export class UserService {
         grade: true,
         className: true,
         profileUrl: true,
+        motto: true,
       },
     });
     return result;
@@ -21,5 +22,16 @@ export class UserService {
 
   async findUserByEmail(email: string) {
     return this.prisma.users.findFirst({ where: { email } });
+  }
+
+  async updateUserInfo(userId: number, body) {
+    const result = await this.prisma.users.update({
+      where: { userId },
+      data: {
+        motto: body.motto,
+      },
+    });
+
+    return result;
   }
 }

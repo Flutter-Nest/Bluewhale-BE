@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Req, UseGuards } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { BearerTokenGuard } from "../auth/bearer-token.guard";
 import { ApiBearerTokenHeader } from "../core/decorator/api-bearer-token-header";
@@ -20,5 +20,18 @@ export class UserController {
   @ApiBearerTokenHeader()
   async getMe(@Req() req) {
     return this.userService.findUserById(req.user.userId);
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Patch("me")
+  @ApiOperation({
+    summary: "토큰을 기준으로 현재 사용자 정보를 수정합니다.",
+  })
+  @ApiOkResponse({
+    description: "사용자 정보 수정 성공",
+  })
+  @ApiBearerTokenHeader()
+  async updateUserInfo(@Req() req, @Body() body) {
+    return this.userService.updateUserInfo(req.user.userId, body);
   }
 }
