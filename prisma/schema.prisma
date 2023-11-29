@@ -11,8 +11,8 @@ datasource db {
 model Users {
   userId     Int       @id @default(autoincrement()) @map("id")
   userName   String    @db.VarChar(15)
-  password   String    @db.VarChar(255)
   email      String    @db.VarChar(255)
+  password   String    @db.VarChar(255)
   birth      DateTime?
   grade      Int      
   className  String?   
@@ -26,6 +26,9 @@ model Users {
   MockTests   MockTests[]
   Schedules   Schedules[]
   Interviews  Interviews[]
+  asStudentConsultings   Consultings[] @relation("StudentConsulting")
+  asConsultantConsultings  Consultings[] @relation("ConsultantConsulting")
+  ConsultingComments  ConsultingComments[]
 }
 
 model SchoolTests {
@@ -124,3 +127,32 @@ model Opus {
 
   Subject Subjects @relation(fields: [subjectId], references: [subjectId])
 } 
+
+model Consultings {
+  consultingId    Int       @id @default(autoincrement()) @map("id")
+  content         String   
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime? 
+  studentId       Int
+  consultantId    Int
+
+  Student         Users     @relation("StudentConsulting", fields: [studentId], references: [userId])
+  Consultant      Users     @relation("ConsultantConsulting", fields: [consultantId], references: [userId])
+  ConsultingComments ConsultingComments[]
+}
+
+
+model ConsultingComments {
+  consultingCommentId   Int         @id @default(autoincrement()) @map("id")
+  content               String
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  deletedAt             DateTime? 
+
+  consultingId          Int
+  Consultings           Consultings @relation(fields: [consultingId], references: [consultingId])
+  
+  userId                Int
+  Users                 Users @relation(fields: [userId], references: [userId])
+}
