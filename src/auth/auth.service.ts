@@ -42,11 +42,11 @@ export class AuthService {
     const user = await this.userService.findUserByEmail(email);
 
     if (!user) {
-      return new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
+      throw new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
     if (user.password !== password) {
-      return new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
+      throw new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
     return user;

@@ -5,14 +5,12 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { join } from "path";
 import { AppModule } from "./app.module";
 import { HttpExceptionFilter } from "./common/exceptions/http-exception.filter";
-import { ResponseDelayInterceptor } from "./core/interceptor/response-delay.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const PORT = process.env.PORT || 3001;
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  app.useGlobalInterceptors(new ResponseDelayInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()

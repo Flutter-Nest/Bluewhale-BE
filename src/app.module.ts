@@ -6,7 +6,6 @@ import { AppService } from "./app.service";
 import { AuthModule } from "./auth/auth.module";
 import { LoggerMiddleware } from "./common/middlewares/logger.middleware";
 import { CoreModule } from "./core/core.module";
-import { ResponseDelayInterceptor } from "./core/interceptor/response-delay.interceptor";
 import { InterviewModule } from "./interview/interview.module";
 import { OpusModule } from "./opus/opus.module";
 import { PrismaModule } from "./prisma/prisma.module";
@@ -34,10 +33,6 @@ import { UserModule } from "./user/user.module";
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ResponseDelayInterceptor,
     },
   ],
 })
