@@ -30,6 +30,7 @@ export class UserEntity implements Users {
   className: string;
   profileUrl: string;
   motto: string;
+  role: string;
 
   birth: Date;
   createdAt: Date;

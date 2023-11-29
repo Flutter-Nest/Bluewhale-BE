@@ -18,6 +18,7 @@ model Users {
   className  String?   
   profileUrl String?
   motto      String?
+  role       String?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime? 
@@ -129,16 +130,16 @@ model Opus {
 } 
 
 model Consultings {
-  consultingId    Int       @id @default(autoincrement()) @map("id")
-  content         String   
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  deletedAt       DateTime? 
-  studentId       Int
-  consultantId    Int
-
-  Student         Users     @relation("StudentConsulting", fields: [studentId], references: [userId])
-  Consultant      Users     @relation("ConsultantConsulting", fields: [consultantId], references: [userId])
+  consultingId       Int       @id @default(autoincrement()) @map("id")
+  content            String   
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime? 
+  studentId          Int
+  consultantId       Int
+  
+  Student            Users     @relation("StudentConsulting", fields: [studentId], references: [userId])
+  Consultant         Users     @relation("ConsultantConsulting", fields: [consultantId], references: [userId])
   ConsultingComments ConsultingComments[]
 }
 

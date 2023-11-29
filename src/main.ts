@@ -8,7 +8,7 @@ import { HttpExceptionFilter } from "./common/exceptions/http-exception.filter";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  const PORT = process.env.PORT || 3001;
+  const PORT = process.env.PORT || 3000;
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -25,6 +25,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup("api", app, document);
+
+  app.enableCors({
+    origin: process.env.CLIENT_URL || `http://localhost:3001`,
+
+    credentials: true,
+  });
 
   await app.listen(PORT);
 }
