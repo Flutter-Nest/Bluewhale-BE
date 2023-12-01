@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { UserService } from "../user/user.service";
 
@@ -9,14 +13,18 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  verifyToken(token: string) {
-    const result = this.jwtService.verify(token);
-    return result;
+  async verifyToken(token: string) {
+    try {
+      const result = await this.jwtService.verify(token);
+      return result;
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      throw new UnauthorizedException("잘못된 토큰입니다.");
+    }
   }
 
   async rotateAccessToken(refreshToken: string): Promise<string> {
     const decoded = this.jwtService.verify(refreshToken);
-
     return this.signToken(
       {
         username: decoded.username,

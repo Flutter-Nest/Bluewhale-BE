@@ -34,4 +34,30 @@ export class UserService {
 
     return result;
   }
+
+  searchUser = async (email: string, name: string) => {
+    const result = await this.prisma.users.findMany({
+      where: {
+        OR: [
+          {
+            email: {
+              contains: email,
+            },
+          },
+          {
+            userName: {
+              contains: name,
+            },
+          },
+        ],
+      },
+      select: {
+        grade: true,
+        className: true,
+        userName: true,
+      },
+    });
+    console.log(email, result);
+    return result;
+  };
 }

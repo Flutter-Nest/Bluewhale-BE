@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Patch, Req, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Query,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { BearerTokenGuard } from "../auth/bearer-token.guard";
 import { ApiBearerTokenHeader } from "../core/decorator/api-bearer-token-header";
@@ -33,5 +41,18 @@ export class UserController {
   @ApiBearerTokenHeader()
   async updateUserInfo(@Req() req, @Body() body) {
     return this.userService.updateUserInfo(req.user.userId, body);
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Get("search")
+  @ApiOperation({
+    summary: "유저 정보 검색",
+  })
+  @ApiOkResponse({
+    description: "유저 정보 검색 성공",
+  })
+  @ApiBearerTokenHeader()
+  async searchUser(@Query("email") email: string, @Query("name") name: string) {
+    return this.userService.searchUser(email, name);
   }
 }
