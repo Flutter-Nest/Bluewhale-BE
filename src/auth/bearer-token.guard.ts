@@ -18,7 +18,6 @@ export class BearerTokenGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     const rawToken = request.headers["authorization"];
-
     if (!rawToken) {
       throw new UnauthorizedException("토큰이 없습니다.");
     }
@@ -30,11 +29,9 @@ export class BearerTokenGuard implements CanActivate {
     }
 
     const token = splitToken[1];
-
     let payload;
-
     try {
-      payload = this.authService.verifyToken(token);
+      payload = await this.authService.verifyToken(token);
     } catch (e) {
       throw new UnauthorizedException("잘못된 토큰입니다.");
     }

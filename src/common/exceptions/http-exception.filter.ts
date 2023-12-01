@@ -17,6 +17,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       | { error: string; statusCode: 400; message: string[] };
 
     const message = err.message;
+
     if (typeof err !== "string" && err.statusCode === 400) {
       return response.status(status).json({
         success: false,
@@ -25,7 +26,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       });
     }
 
-    response.status(status).json({
+    return response.status(status).json({
       success: false,
       code: status,
       message,

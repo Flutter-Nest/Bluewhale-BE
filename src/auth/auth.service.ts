@@ -18,8 +18,7 @@ export class AuthService {
       const result = await this.jwtService.verify(token);
       return result;
     } catch (error) {
-      console.error("Token verification failed:", error);
-      throw new UnauthorizedException("잘못된 토큰입니다.");
+      return new UnauthorizedException("잘못된 토큰입니다.");
     }
   }
 
