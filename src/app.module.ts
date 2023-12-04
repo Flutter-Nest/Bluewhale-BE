@@ -12,6 +12,7 @@ import { PrismaModule } from "./prisma/prisma.module";
 import { ScheduleModule } from "./schedule/schedule.module";
 import { TestModule } from "./test/test.module";
 import { UserModule } from "./user/user.module";
+import { ConsultingModule } from './consulting/consulting.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UserModule } from "./user/user.module";
     InterviewModule,
     OpusModule,
     TestModule,
+    ConsultingModule,
   ],
   controllers: [AppController],
   providers: [

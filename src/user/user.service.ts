@@ -52,6 +52,7 @@ export class UserService {
         ],
       },
       select: {
+        userId: true,
         grade: true,
         className: true,
         userName: true,

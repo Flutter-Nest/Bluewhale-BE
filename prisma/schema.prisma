@@ -132,6 +132,8 @@ model Opus {
 model Consultings {
   consultingId       Int       @id @default(autoincrement()) @map("id")
   content            String   
+  startDate          DateTime
+  endDate            DateTime
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
   deletedAt          DateTime? 
