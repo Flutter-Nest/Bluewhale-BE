@@ -58,7 +58,6 @@ export class UserService {
         userName: true,
       },
     });
-    console.log(email, result);
     return result;
   };
 }

@@ -13,6 +13,7 @@ import { ScheduleModule } from "./schedule/schedule.module";
 import { TestModule } from "./test/test.module";
 import { UserModule } from "./user/user.module";
 import { ConsultingModule } from './consulting/consulting.module';
+import { ConsultingCommentModule } from './consulting-comment/consulting-comment.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ConsultingModule } from './consulting/consulting.module';
     OpusModule,
     TestModule,
     ConsultingModule,
+    ConsultingCommentModule,
   ],
   controllers: [AppController],
   providers: [

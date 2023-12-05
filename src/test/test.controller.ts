@@ -31,7 +31,6 @@ export class TestController {
   @UseGuards(BearerTokenGuard)
   @Post("/school")
   async createSchoolTest(@Body() body, @Req() req) {
-    console.log(body);
     const result = await this.testService.createSchoolTest(
       body,
       req.user.userId
@@ -78,7 +77,6 @@ export class TestController {
   @UseGuards(BearerTokenGuard)
   @Post("/mock")
   async createMockTest(@Body() body, @Req() req) {
-    console.log(body);
     const result = await this.testService.createMockTest(body, req.user.userId);
     return result;
   }

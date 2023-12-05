@@ -31,7 +31,11 @@ export class ConsultingService {
         startDate: true,
         endDate: true,
         createdAt: true,
-        ConsultingComments: true,
+        ConsultingComments: {
+          include: {
+            Users: true,
+          },
+        },
       },
     });
 
@@ -45,9 +49,18 @@ export class ConsultingService {
       startDate: result.startDate,
       endDate: result.endDate,
       createdAt: result.createdAt,
-      comments: result.ConsultingComments,
+      comments: result.ConsultingComments.map((comment) => ({
+        consultingCommentId: comment.consultingCommentId,
+        consultingId: comment.consultingId,
+        userId: comment.userId,
+        userName: comment.Users.userName,
+        profileUrl: comment.Users.profileUrl,
+        content: comment.content,
+        createdAt: comment.createdAt,
+      })),
     }));
 
+    console.log(result);
     return result;
   }
 }
