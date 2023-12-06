@@ -9,10 +9,10 @@ export class ScheduleService {
     const result = await this.prisma.schedules.create({
       data: {
         userId,
-        subjectId: body.subjectId,
         startTime: body.startTime,
         endTime: body.endTime,
         completion: body.completion,
+        subject: body.subject,
         content: body.content,
         date: body.date,
       },
@@ -33,12 +33,7 @@ export class ScheduleService {
         endTime: true,
         content: true,
         completion: true,
-        Subject: {
-          select: {
-            subjectId: true,
-            subjectColor: true,
-          },
-        },
+        subject: true,
       },
     });
 
@@ -49,8 +44,7 @@ export class ScheduleService {
       startTime: item.startTime,
       endTime: item.endTime,
       completion: item.completion,
-      subjectColor: item.Subject.subjectColor,
-      subjectId: item.Subject.subjectId,
+      subject: item.subject,
     }));
 
     return result;
@@ -66,12 +60,7 @@ export class ScheduleService {
         endTime: true,
         content: true,
         completion: true,
-        Subject: {
-          select: {
-            subjectId: true,
-            subjectColor: true,
-          },
-        },
+        subject: true,
       },
     });
 
@@ -82,15 +71,13 @@ export class ScheduleService {
       startTime: rawResult.startTime,
       endTime: rawResult.endTime,
       completion: rawResult.completion,
-      subjectColor: rawResult.Subject.subjectColor,
-      subjectId: rawResult.Subject.subjectId,
+      subject: rawResult.subject,
     };
     return result;
   }
 
   async updateSchedule(scheduleId: number, body: any) {
-    const { id, content, date, startTime, endTime, completion, subjectId } =
-      body;
+    const { id, content, date, startTime, endTime, completion, subject } = body;
 
     return await this.prisma.schedules.update({
       where: {
@@ -102,7 +89,7 @@ export class ScheduleService {
         startTime,
         endTime,
         completion,
-        subjectId,
+        subject,
       },
     });
   }

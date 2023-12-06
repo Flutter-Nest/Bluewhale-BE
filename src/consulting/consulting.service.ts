@@ -60,7 +60,6 @@ export class ConsultingService {
       })),
     }));
 
-    console.log(result);
     return result;
   }
 }

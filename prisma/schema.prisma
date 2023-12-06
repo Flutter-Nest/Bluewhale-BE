@@ -69,7 +69,7 @@ model MockTests {
 model Schedules {
   id         Int       @id @default(autoincrement()) @map("id")
   userId     Int
-  subjectId  Int
+  subject    String?
   content    String    @db.VarChar(255)
   startTime  Int
   endTime    Int
@@ -80,7 +80,6 @@ model Schedules {
   deletedAt  DateTime? 
 
   User    Users    @relation(fields: [userId], references: [userId])
-  Subject Subjects @relation(fields: [subjectId], references: [subjectId])
 }
 
 model Subjects {
@@ -91,7 +90,6 @@ model Subjects {
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime? 
 
-  Schedules Schedules[]
   Opus      Opus[]
 }
 
