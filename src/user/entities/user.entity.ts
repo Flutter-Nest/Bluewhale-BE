@@ -31,6 +31,8 @@ export class UserEntity implements Users {
   profileUrl: string;
   motto: string;
   role: string;
+  phoneNumber: string;
+  school: string;
 
   birth: Date;
   createdAt: Date;

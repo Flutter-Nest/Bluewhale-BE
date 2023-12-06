@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Patch,
+  Post,
   Query,
   Req,
   UseGuards,
@@ -46,13 +47,25 @@ export class UserController {
   @UseGuards(BearerTokenGuard)
   @Get("search")
   @ApiOperation({
-    summary: "유저 정보 검색",
+    summary: "유저 검색",
   })
   @ApiOkResponse({
-    description: "유저 정보 검색 성공",
+    description: "유저 검색 성공",
   })
   @ApiBearerTokenHeader()
   async searchUser(@Query("email") email: string, @Query("name") name: string) {
     return this.userService.searchUser(email, name);
+  }
+
+  @Post("/student")
+  @ApiOperation({
+    summary: "회원가입",
+  })
+  @ApiOkResponse({
+    description: "회원가입 성공",
+  })
+  @ApiBearerTokenHeader()
+  async signupStudent(@Body() body) {
+    return this.userService.signupStudent(body);
   }
 }
