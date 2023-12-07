@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import * as bcrypt from "bcrypt";
 import { UserService } from "../user/user.service";
 
 @Injectable()
@@ -52,7 +53,8 @@ export class AuthService {
       throw new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
-    if (user.password !== password) {
+    const validatePassword = bcrypt.compare(password, user.password);
+    if (!validatePassword) {
       throw new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
