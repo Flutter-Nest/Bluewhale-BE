@@ -76,7 +76,7 @@ model MockTests {
 model Schedules {
   id         Int       @id @default(autoincrement()) @map("id")
   userId     Int
-  subject    String?
+  subject    String
   content    String    @db.VarChar(255)
   startTime  Int
   endTime    Int
@@ -86,7 +86,7 @@ model Schedules {
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime? 
 
-  User    Users    @relation(fields: [userId], references: [userId])
+  User       Users     @relation(fields: [userId], references: [userId])
 }
 
 model Subjects {
@@ -101,7 +101,7 @@ model Subjects {
 }
 
 model Interviews {
-  interviewId  Int       @id @default(autoincrement()) @map("id")
+  interviewId  Int        @id @default(autoincrement()) @map("id")
   CACE         Int    
   PIPO         Int    
   RURD         Int
@@ -110,28 +110,32 @@ model Interviews {
   AE           Int
   RF           Int
   userId       Int
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   deletedAt    DateTime? 
 
-  User    Users    @relation(fields: [userId], references: [userId])
+  User         Users      @relation(fields: [userId], references: [userId])
 }
 
 model Opus {
-  opusId       Int @id @default(autoincrement()) @map("id")
+  opusId       Int        @id @default(autoincrement()) @map("id")
   subjectId    Int
-  teacher      String
+  studentId    Int
+  teacherId    Int
   title        String
-  content      String
+  content      String?
   grade        Int
   className    String
   date         DateTime
   time         Int
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
   deletedAt    DateTime? 
 
-  Subject Subjects @relation(fields: [subjectId], references: [subjectId])
+  Subject      Subjects   @relation(fields: [subjectId], references: [subjectId])
+  Student      Users      @relation("StudentOpus", fields: [studentId], references: [userId])
+  Teacher      Users      @relation("TeacherOpus", fields: [teacherId], references: [userId])
+
 } 
 
 model Consultings {

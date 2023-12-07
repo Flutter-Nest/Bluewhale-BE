@@ -1,4 +1,12 @@
-import { Controller, Get, Query, Req, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from "@nestjs/common";
 import { ApiOkResponse, ApiOperation } from "@nestjs/swagger";
 import { BearerTokenGuard } from "src/auth/bearer-token.guard";
 import { ApiBearerTokenHeader } from "src/core/decorator/api-bearer-token-header";
@@ -11,13 +19,39 @@ export class OpusController {
   @UseGuards(BearerTokenGuard)
   @Get()
   @ApiOperation({
-    summary: "유저가 참여하는 수업",
+    summary: "사용자가 참여하는 온라인 수업",
   })
   @ApiOkResponse({
-    description: "사용자의 수업 가져오기 성공",
+    description: "사용자의 온라인 수업 가져오기 성공",
   })
   @ApiBearerTokenHeader()
-  async getMe(@Req() req, @Query() query) {
+  async fetchOpus(@Req() req, @Query() query) {
     return this.opusService.fetchOpus(req.user.userId, query);
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Post()
+  @ApiOperation({
+    summary: "온라인 수업 등록",
+  })
+  @ApiOkResponse({
+    description: "온라인 수업 등록 성공",
+  })
+  @ApiBearerTokenHeader()
+  async createOpus(@Req() req, @Body() body) {
+    return this.opusService.createOpus(req.user.userId, body);
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Post("/consulting")
+  @ApiOperation({
+    summary: "컨설팅 일정 등록",
+  })
+  @ApiOkResponse({
+    description: "컨설팅 일정 등록 성공",
+  })
+  @ApiBearerTokenHeader()
+  async createConsulting(@Req() req, @Body() body) {
+    return this.opusService.createConsulting(req.user.userId, body);
   }
 }

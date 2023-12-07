@@ -20,7 +20,7 @@ export class OpusService {
       },
       select: {
         opusId: true,
-        teacher: true,
+        teacherId: true,
         date: true,
         title: true,
         content: true,
@@ -37,7 +37,7 @@ export class OpusService {
 
     const result = rawResult.map((item) => ({
       id: item.opusId,
-      teacher: item.teacher,
+      teacherId: item.teacherId,
       date: item.date,
       title: item.title,
       content: item.content,
@@ -46,6 +46,62 @@ export class OpusService {
       time: item.time,
       subjectColor: item.Subject.subjectColor,
     }));
+    return result;
+  }
+
+  async createOpus(userId: number, body) {
+    const { subjectId, title, content, grade, className, date, time } = body;
+
+    const isoDate = new Date(date).toISOString();
+
+    const students = await this.prisma.users.findMany({
+      where: {
+        grade,
+        className,
+      },
+      select: {
+        userId: true,
+      },
+    });
+
+    const studentIdArray = students.map((student) => student.userId);
+    const opusData = studentIdArray.map((studentId) => ({
+      subjectId,
+      title,
+      content,
+      grade,
+      className,
+      date: isoDate,
+      time,
+      teacherId: userId,
+      studentId,
+    }));
+
+    const result = await this.prisma.opus.createMany({
+      data: opusData,
+    });
+
+    return result;
+  }
+
+  async createConsulting(userId: number, body) {
+    const { subjectId, title, content, grade, className, date, time } = body;
+    const isoDate = new Date(date).toISOString();
+
+    const result = await this.prisma.opus.create({
+      data: {
+        subjectId,
+        title,
+        content,
+        grade,
+        className,
+        date: isoDate,
+        time,
+        teacherId: userId,
+        studentId: body.studentId,
+      },
+    });
+
     return result;
   }
 }
