@@ -9,29 +9,34 @@ datasource db {
 }
 
 model Users {
-  userId      Int       @id @default(autoincrement()) @map("id")
-  userName    String   
-  email       String    
-  password    String   
-  phoneNumber String?
-  school      String?
-  birth       DateTime?
-  grade       Int?      @default(0)
-  className   String?   
-  profileUrl  String?
-  motto       String?
-  role        String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime? 
+  userId        Int       @id @default(autoincrement()) @map("id")
+  userName      String   
+  email         String    
+  password      String   
+  phoneNumber   String
+  privateNumber Int
+  school        String
+  birth         DateTime
+  grade         Int       @default(0)
+  className     String?   
+  profileUrl    String?
+  motto         String?
+  role          String
+  isAccepted    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime? 
 
-  SchoolTests SchoolTests[]
-  MockTests   MockTests[]
-  Schedules   Schedules[]
-  Interviews  Interviews[]
-  asStudentConsultings   Consultings[] @relation("StudentConsulting")
-  asConsultantConsultings  Consultings[] @relation("ConsultantConsulting")
-  ConsultingComments  ConsultingComments[]
+  SchoolTests   SchoolTests[]
+  MockTests     MockTests[]
+  Schedules     Schedules[]
+  Interviews    Interviews[]
+  Attendances   Attendances[]
+  asStudentOpus          Opus[] @relation("StudentOpus")
+  asTeacherOpus          Opus[] @relation("TeacherOpus")
+  asStudentConsultings      Consultings[] @relation("StudentConsulting")
+  asConsultantConsultings   Consultings[] @relation("ConsultantConsulting")
+  ConsultingComments        ConsultingComments[]
 }
 
 model SchoolTests {

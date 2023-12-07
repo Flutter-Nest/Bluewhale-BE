@@ -15,6 +15,7 @@ export class UserService {
         grade: true,
         className: true,
         profileUrl: true,
+        role: true,
         motto: true,
       },
     });
@@ -80,6 +81,9 @@ export class UserService {
     const currentYear = new Date().getFullYear();
     const age = currentYear - birthYear;
 
+    const phoneNumber = body.phoneNumber;
+    const privateNumber = phoneNumber.slice(-4);
+
     let grade;
     if (age === 16) {
       grade = 1;
@@ -95,7 +99,8 @@ export class UserService {
         email: body.email,
         password: hashedPassword,
         birth: birthDate.toISOString(),
-        phoneNumber: body.phoneNumber,
+        phoneNumber: phoneNumber,
+        privateNumber: +privateNumber,
         school: body.school,
         grade,
         role: "student",

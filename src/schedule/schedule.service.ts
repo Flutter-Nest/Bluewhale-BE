@@ -77,7 +77,7 @@ export class ScheduleService {
   }
 
   async updateSchedule(scheduleId: number, body: any) {
-    const { id, content, date, startTime, endTime, completion, subject } = body;
+    const { content, date, startTime, endTime, completion, subject } = body;
 
     return await this.prisma.schedules.update({
       where: {

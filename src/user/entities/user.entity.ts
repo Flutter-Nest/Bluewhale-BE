@@ -33,6 +33,8 @@ export class UserEntity implements Users {
   role: string;
   phoneNumber: string;
   school: string;
+  privateNumber: number;
+  isAccepted: boolean;
 
   birth: Date;
   createdAt: Date;
