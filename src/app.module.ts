@@ -14,6 +14,7 @@ import { TestModule } from "./test/test.module";
 import { UserModule } from "./user/user.module";
 import { ConsultingModule } from './consulting/consulting.module';
 import { ConsultingCommentModule } from './consulting-comment/consulting-comment.module';
+import { AttendanceModule } from './attendance/attendance.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ConsultingCommentModule } from './consulting-comment/consulting-comment
     TestModule,
     ConsultingModule,
     ConsultingCommentModule,
+    AttendanceModule,
   ],
   controllers: [AppController],
   providers: [

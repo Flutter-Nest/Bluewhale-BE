@@ -32,6 +32,7 @@ model Users {
   Schedules     Schedules[]
   Interviews    Interviews[]
   Attendances   Attendances[]
+  Notifications Notifications[]
   asStudentOpus          Opus[] @relation("StudentOpus")
   asTeacherOpus          Opus[] @relation("TeacherOpus")
   asStudentConsultings      Consultings[] @relation("StudentConsulting")
@@ -143,6 +144,7 @@ model Consultings {
   content            String   
   startDate          DateTime
   endDate            DateTime
+  isRead             Boolean   @default(false)
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
   deletedAt          DateTime? 
@@ -166,5 +168,27 @@ model ConsultingComments {
   Consultings           Consultings @relation(fields: [consultingId], references: [consultingId])
   
   userId                Int
-  Users                 Users @relation(fields: [userId], references: [userId])
+  Users                 Users       @relation(fields: [userId], references: [userId])
+}
+
+model Attendances{
+  attendanceId    Int         @id @default(autoincrement()) @map("id")
+  onLink          Boolean
+  createdAt       DateTime    @default(now())
+
+  userId          Int
+  User            Users       @relation(fields: [userId], references: [userId])
+}
+
+model Notifications{
+  notificationId  Int         @id @default(autoincrement()) @map("id")
+  isRead          Boolean     @default(false)
+  title           String
+  content         String
+  grade           Int
+  class           String
+  createdAt       DateTime    @default(now())
+
+  userId          Int
+  User            Users       @relation(fields: [userId], references: [userId])
 }
