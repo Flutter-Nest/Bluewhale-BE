@@ -31,6 +31,7 @@ export class ConsultingService {
         startDate: true,
         endDate: true,
         createdAt: true,
+        isRead: true,
         ConsultingComments: {
           include: {
             Users: true,
@@ -41,6 +42,7 @@ export class ConsultingService {
 
     const result = rawResult.map((result) => ({
       consultingId: result.consultingId,
+      isRead: result.isRead,
       consultant: result.Consultant.userName,
       student: result.Student.userName,
       grade: result.Student.grade,
