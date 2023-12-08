@@ -23,4 +23,14 @@ export class AttendanceService {
 
     return result;
   }
+
+  async fetchAttendances(userId: number) {
+    const result = await this.prisma.attendances.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    return result;
+  }
 }

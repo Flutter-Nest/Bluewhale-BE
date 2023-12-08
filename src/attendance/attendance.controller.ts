@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
 import { BearerTokenGuard } from "src/auth/bearer-token.guard";
 import { AttendanceService } from "./attendance.service";
 
@@ -12,6 +12,15 @@ export class AttendanceController {
     const result = await this.attendanceService.createAttendance(
       req.user.userId,
       body
+    );
+    return result;
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Get()
+  async fetchAttendances(@Req() req) {
+    const result = await this.attendanceService.fetchAttendances(
+      req.user.userId
     );
     return result;
   }
