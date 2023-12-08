@@ -15,6 +15,7 @@ import { UserModule } from "./user/user.module";
 import { ConsultingModule } from './consulting/consulting.module';
 import { ConsultingCommentModule } from './consulting-comment/consulting-comment.module';
 import { AttendanceModule } from './attendance/attendance.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AttendanceModule } from './attendance/attendance.module';
     ConsultingModule,
     ConsultingCommentModule,
     AttendanceModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [

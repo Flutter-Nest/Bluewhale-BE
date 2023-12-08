@@ -186,7 +186,7 @@ model Notifications{
   title           String
   content         String
   grade           Int
-  class           String
+  className       String
   createdAt       DateTime    @default(now())
 
   userId          Int
