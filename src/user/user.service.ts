@@ -109,4 +109,11 @@ export class UserService {
 
     return result;
   }
+
+  async withdrawalUser(userId: number) {
+    const result = await this.prisma.users.delete({
+      where: { userId },
+    });
+    return result;
+  }
 }

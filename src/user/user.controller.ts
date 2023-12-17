@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   Post,
@@ -59,7 +60,7 @@ export class UserController {
 
   @Post("/student")
   @ApiOperation({
-    summary: "회원가입",
+    summary: "회원 가입",
   })
   @ApiOkResponse({
     description: "회원가입 성공",
@@ -67,5 +68,19 @@ export class UserController {
   @ApiBearerTokenHeader()
   async signupStudent(@Body() body) {
     return this.userService.signupStudent(body);
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Delete("/me")
+  @ApiOperation({
+    summary: "회원 탈퇴",
+  })
+  @ApiOkResponse({
+    description: "회원 탈퇴 성공",
+  })
+  @ApiBearerTokenHeader()
+  async withdrawalUser(@Req() req) {
+    console.log(req.user);
+    return this.userService.withdrawalUser(req.user.userId);
   }
 }
