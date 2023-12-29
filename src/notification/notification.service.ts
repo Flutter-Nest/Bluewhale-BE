@@ -34,10 +34,33 @@ export class NotificationService {
   }
 
   async fetchNotifications(user) {
+    let queryGrade;
+    let queryClassName;
+
+    if (user.role === "parent" && user.studentId !== 0) {
+      const student = await this.prisma.users.findUnique({
+        where: { userId: user.studentId },
+        select: {
+          grade: true,
+          className: true,
+        },
+      });
+
+      if (student) {
+        queryGrade = student.grade;
+        queryClassName = student.className;
+      } else {
+        return [];
+      }
+    } else {
+      queryGrade = user.grade;
+      queryClassName = user.className;
+    }
+
     const result = await this.prisma.notifications.findMany({
       where: {
-        grade: user.grade,
-        className: user.className,
+        grade: queryGrade,
+        className: queryClassName,
       },
     });
 
