@@ -53,7 +53,7 @@ export class AuthService {
       throw new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }
 
-    const validatePassword = bcrypt.compare(password, user.password);
+    const validatePassword = await bcrypt.compare(password, user.password);
     if (!validatePassword) {
       throw new ForbiddenException("아이디 또는 비밀번호를 확인해주세요");
     }

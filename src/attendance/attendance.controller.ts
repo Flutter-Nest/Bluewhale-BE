@@ -1,5 +1,5 @@
+import { BearerTokenGuard } from "./../auth/bearer-token.guard";
 import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
-import { BearerTokenGuard } from "src/auth/bearer-token.guard";
 import { AttendanceService } from "./attendance.service";
 
 @Controller("attendance")

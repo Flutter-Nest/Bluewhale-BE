@@ -17,6 +17,8 @@ export class UserService {
         profileUrl: true,
         role: true,
         motto: true,
+        isAccepted: true,
+        studentId: true,
       },
     });
     return result;
@@ -63,7 +65,12 @@ export class UserService {
     return result;
   };
 
-  async signupStudent(body) {
+  async signup(body) {
+    const existingUser = await this.findUserByEmail(body.email);
+    if (existingUser) {
+      throw new Error("User already exists with this email");
+    }
+
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
     let birthDate;
@@ -77,21 +84,8 @@ export class UserService {
       throw new Error("Invalid birth date format");
     }
 
-    const birthYear = birthDate.getFullYear();
-    const currentYear = new Date().getFullYear();
-    const age = currentYear - birthYear;
-
-    const phoneNumber = body.phoneNumber;
+    const phoneNumber = String(body.phoneNumber);
     const privateNumber = phoneNumber.slice(-4);
-
-    let grade;
-    if (age === 16) {
-      grade = 1;
-    } else if (age === 17) {
-      grade = 2;
-    } else if (age === 18) {
-      grade = 3;
-    }
 
     const result = await this.prisma.users.create({
       data: {
@@ -100,10 +94,11 @@ export class UserService {
         password: hashedPassword,
         birth: birthDate.toISOString(),
         phoneNumber: phoneNumber,
-        privateNumber: +privateNumber,
+        privateNumber: privateNumber,
         school: body.school,
-        grade,
-        role: "student",
+        grade: body.grade,
+        role: body.role,
+        studentName: body.studentName,
       },
     });
 

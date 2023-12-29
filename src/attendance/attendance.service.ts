@@ -7,7 +7,7 @@ export class AttendanceService {
   async createAttendance(userId: number, body) {
     const user = await this.prisma.users.findFirst({
       where: {
-        privateNumber: +body.privateNumber,
+        privateNumber: body.privateNumber,
       },
       select: {
         userId: true,

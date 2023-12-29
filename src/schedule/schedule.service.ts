@@ -21,10 +21,20 @@ export class ScheduleService {
     return result;
   }
 
-  async fetchSchedules(userId: number) {
+  async fetchSchedules(user) {
+    let queryUserId: number;
+
+    if (user.role === "parent" && user.studentId !== 0) {
+      queryUserId = user.studentId;
+    } else if (user.role === "student" && user.studentId === 0) {
+      queryUserId = user.userId;
+    } else {
+      queryUserId = user.userId;
+    }
+
     const rawResult = await this.prisma.schedules.findMany({
       where: {
-        userId,
+        userId: queryUserId,
       },
       select: {
         id: true,

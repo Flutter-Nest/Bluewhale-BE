@@ -18,10 +18,20 @@ export class ConsultingService {
     return result;
   }
 
-  async fetchConsultings(userId: number, query) {
+  async fetchConsultings(user) {
+    let queryStudentId;
+
+    if (user.role === "parent" && user.studentId !== 0) {
+      queryStudentId = user.studentId;
+    } else if (user.role === "student" && user.studentId === 0) {
+      queryStudentId = user.userId;
+    } else {
+      queryStudentId = user.userId;
+    }
+
     const rawResult = await this.prisma.consultings.findMany({
       where: {
-        studentId: +query.studentId,
+        studentId: queryStudentId,
       },
       select: {
         consultingId: true,

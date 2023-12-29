@@ -1,19 +1,23 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
-import { UserService } from "src/user/user.service";
 
 @Injectable()
 export class OpusService {
-  constructor(
-    private prisma: PrismaService,
-    private userService: UserService
-  ) {}
-  async fetchOpus(userId: number, query) {
-    const { grade, className } = await this.userService.findUserById(userId);
+  constructor(private prisma: PrismaService) {}
+  async fetchOpus(user, query) {
+    let queryUserId;
+
+    if (user.role === "parent" && user.studentId !== 0) {
+      queryUserId = user.studentId;
+    } else if (user.role === "student" && user.studentId === 0) {
+      queryUserId = user.userId;
+    } else {
+      queryUserId = user.userId;
+    }
+
     const rawResult = await this.prisma.opus.findMany({
       where: {
-        grade,
-        className,
+        studentId: queryUserId,
         date: {
           equals: query.date,
         },
@@ -27,8 +31,10 @@ export class OpusService {
         grade: true,
         className: true,
         time: true,
+        opusUrl: true,
         Subject: {
           select: {
+            subjectId: true,
             subjectColor: true,
           },
         },
@@ -44,13 +50,17 @@ export class OpusService {
       grade: item.grade,
       className: item.className,
       time: item.time,
+      opusUrl: item.opusUrl,
+      subjectId: item.Subject.subjectId,
       subjectColor: item.Subject.subjectColor,
     }));
     return result;
   }
 
   async createOpus(userId: number, body) {
-    const { subjectId, title, content, grade, className, date, time } = body;
+    console.log(body);
+    const { subjectId, title, content, opusUrl, grade, className, date, time } =
+      body;
 
     const isoDate = new Date(date).toISOString();
 
@@ -69,6 +79,7 @@ export class OpusService {
       subjectId,
       title,
       content,
+      opusUrl,
       grade,
       className,
       date: isoDate,

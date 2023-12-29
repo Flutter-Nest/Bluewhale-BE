@@ -26,7 +26,7 @@ export class OpusController {
   })
   @ApiBearerTokenHeader()
   async fetchOpus(@Req() req, @Query() query) {
-    return this.opusService.fetchOpus(req.user.userId, query);
+    return this.opusService.fetchOpus(req.user, query);
   }
 
   @UseGuards(BearerTokenGuard)

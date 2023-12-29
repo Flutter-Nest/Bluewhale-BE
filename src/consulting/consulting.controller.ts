@@ -38,7 +38,7 @@ export class ConsultingController {
     description: "컨설팅 메시지 전체 조회 성공",
   })
   @ApiBearerTokenHeader()
-  async fetchConsultings(@Req() req, @Query() query) {
-    return this.consultingService.fetchConsultings(req.user.userId, query);
+  async fetchConsultings(@Req() req) {
+    return this.consultingService.fetchConsultings(req.user);
   }
 }

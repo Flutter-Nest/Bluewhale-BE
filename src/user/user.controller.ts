@@ -13,6 +13,7 @@ import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { BearerTokenGuard } from "../auth/bearer-token.guard";
 import { ApiBearerTokenHeader } from "../core/decorator/api-bearer-token-header";
 import { UserService } from "./user.service";
+import { EmailDto } from "./dto/email.dto";
 
 @ApiTags("user")
 @Controller("user")
@@ -58,7 +59,7 @@ export class UserController {
     return this.userService.searchUser(email, name);
   }
 
-  @Post("/student")
+  @Post("/signup")
   @ApiOperation({
     summary: "회원 가입",
   })
@@ -66,8 +67,8 @@ export class UserController {
     description: "회원가입 성공",
   })
   @ApiBearerTokenHeader()
-  async signupStudent(@Body() body) {
-    return this.userService.signupStudent(body);
+  async signup(@Body() body) {
+    return this.userService.signup(body);
   }
 
   @UseGuards(BearerTokenGuard)
@@ -82,5 +83,18 @@ export class UserController {
   async withdrawalUser(@Req() req) {
     console.log(req.user);
     return this.userService.withdrawalUser(req.user.userId);
+  }
+
+  @Post("/checkEmail")
+  @ApiOperation({
+    summary: "이메일 중복 확인",
+  })
+  @ApiOkResponse({
+    description: "이메일 중복 확인 성공",
+  })
+  async checkEmail(@Body() emailDto: EmailDto) {
+    const user = await this.userService.findUserByEmail(emailDto.email);
+    console.log(user);
+    return { isEmailAvailable: !user };
   }
 }
