@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -31,6 +32,13 @@ export class ScheduleController {
   async updateSchedule(@Param("scheduleId") scheduleId, @Body() body) {
     const result = await this.scheduleService.updateSchedule(+scheduleId, body);
     return result;
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Delete(":scheduleId")
+  async deleteSchedule(@Param("scheduleId") scheduleId) {
+    await this.scheduleService.deleteSchedule(+scheduleId);
+    return { message: "Schedule deleted successfully" };
   }
 
   @UseGuards(BearerTokenGuard)

@@ -9,8 +9,6 @@ export class ScheduleService {
     const result = await this.prisma.schedules.create({
       data: {
         userId,
-        startTime: body.startTime,
-        endTime: body.endTime,
         completion: body.completion,
         subject: body.subject,
         content: body.content,
@@ -39,11 +37,10 @@ export class ScheduleService {
       select: {
         id: true,
         date: true,
-        startTime: true,
-        endTime: true,
         content: true,
         completion: true,
         subject: true,
+        time: true,
       },
     });
 
@@ -51,12 +48,10 @@ export class ScheduleService {
       id: item.id,
       content: item.content,
       date: item.date,
-      startTime: item.startTime,
-      endTime: item.endTime,
       completion: item.completion,
       subject: item.subject,
+      time: item.time,
     }));
-
     return result;
   }
 
@@ -66,11 +61,10 @@ export class ScheduleService {
       select: {
         id: true,
         date: true,
-        startTime: true,
-        endTime: true,
         content: true,
         completion: true,
         subject: true,
+        time: true,
       },
     });
 
@@ -78,16 +72,15 @@ export class ScheduleService {
       id: rawResult.id,
       content: rawResult.content,
       date: rawResult.date,
-      startTime: rawResult.startTime,
-      endTime: rawResult.endTime,
       completion: rawResult.completion,
       subject: rawResult.subject,
+      time: rawResult.time,
     };
     return result;
   }
 
   async updateSchedule(scheduleId: number, body: any) {
-    const { content, date, startTime, endTime, completion, subject } = body;
+    const { content, date, time, completion, subject } = body;
 
     return await this.prisma.schedules.update({
       where: {
@@ -96,8 +89,7 @@ export class ScheduleService {
       data: {
         content,
         date,
-        startTime,
-        endTime,
+        time,
         completion,
         subject,
       },
@@ -112,5 +104,11 @@ export class ScheduleService {
       },
     });
     return result;
+  }
+
+  async deleteSchedule(scheduleId: number) {
+    await this.prisma.schedules.delete({
+      where: { id: scheduleId },
+    });
   }
 }
