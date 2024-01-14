@@ -26,6 +26,7 @@ export class UserEntity implements Users {
     example: "test@test.com",
   })
   email: string;
+
   grade: number;
   className: string;
   profileUrl: string;

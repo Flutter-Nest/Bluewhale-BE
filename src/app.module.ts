@@ -16,6 +16,7 @@ import { ConsultingModule } from './consulting/consulting.module';
 import { ConsultingCommentModule } from './consulting-comment/consulting-comment.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { NotificationModule } from './notification/notification.module';
+import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { NotificationModule } from './notification/notification.module';
     ConsultingCommentModule,
     AttendanceModule,
     NotificationModule,
+    S3Module,
   ],
   controllers: [AppController],
   providers: [

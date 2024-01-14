@@ -1,11 +1,16 @@
+import { FilesInterceptor } from "@nestjs/platform-express";
 import {
   Body,
   Controller,
+  FileTypeValidator,
   Get,
+  ParseFilePipe,
   Post,
   Query,
   Req,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation } from "@nestjs/swagger";
 import { BearerTokenGuard } from "src/auth/bearer-token.guard";
@@ -38,8 +43,14 @@ export class OpusController {
     description: "온라인 수업 등록 성공",
   })
   @ApiBearerTokenHeader()
-  async createOpus(@Req() req, @Body() body) {
-    return this.opusService.createOpus(req.user.userId, body);
+  @UseInterceptors(FilesInterceptor("files"))
+  async createOpus(
+    @Req() req,
+    @Body() body,
+    @UploadedFiles(new ParseFilePipe({}))
+    files: Express.Multer.File[]
+  ) {
+    return this.opusService.createOpus(req.user.userId, body, files);
   }
 
   @UseGuards(BearerTokenGuard)

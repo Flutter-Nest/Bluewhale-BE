@@ -5,15 +5,19 @@ import {
   Get,
   Patch,
   Post,
+  Put,
   Query,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { BearerTokenGuard } from "../auth/bearer-token.guard";
 import { ApiBearerTokenHeader } from "../core/decorator/api-bearer-token-header";
 import { UserService } from "./user.service";
 import { EmailDto } from "./dto/email.dto";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @ApiTags("user")
 @Controller("user")
@@ -81,7 +85,6 @@ export class UserController {
   })
   @ApiBearerTokenHeader()
   async withdrawalUser(@Req() req) {
-    console.log(req.user);
     return this.userService.withdrawalUser(req.user.userId);
   }
 
@@ -94,7 +97,16 @@ export class UserController {
   })
   async checkEmail(@Body() emailDto: EmailDto) {
     const user = await this.userService.findUserByEmail(emailDto.email);
-    console.log(user);
     return { isEmailAvailable: !user };
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Put("/profile")
+  @UseInterceptors(FileInterceptor("profileImage"))
+  async updateProfileImage(
+    @Req() req,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    return this.userService.updateProfileImage(req.user.userId, file);
   }
 }

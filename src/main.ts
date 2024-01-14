@@ -27,8 +27,10 @@ async function bootstrap() {
   SwaggerModule.setup("api", app, document);
 
   app.enableCors({
-    origin: process.env.CLIENT_URL || `http://localhost:3001`,
-
+    origin: [
+      process.env.CLIENT_URL || `http://localhost:3001`,
+      `http://localhost:3000`,
+    ],
     credentials: true,
   });
 

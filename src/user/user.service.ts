@@ -1,10 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
 import { PrismaService } from "src/prisma/prisma.service";
+import { S3Service } from "src/s3/s3.service";
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private readonly s3Service: S3Service
+  ) {}
 
   async findUserById(userId: number) {
     const result = await this.prisma.users.findFirst({
@@ -110,5 +114,20 @@ export class UserService {
       where: { userId },
     });
     return result;
+  }
+
+  async updateProfileImage(userId: number, file: Express.Multer.File) {
+    const awsFileKey = `image`;
+    const uploadedFile = await this.s3Service.uploadProfileImage(
+      awsFileKey,
+      file
+    );
+
+    await this.prisma.users.update({
+      where: { userId: userId },
+      data: { profileUrl: uploadedFile.url },
+    });
+
+    return { message: "Profile image updated successfully." };
   }
 }
