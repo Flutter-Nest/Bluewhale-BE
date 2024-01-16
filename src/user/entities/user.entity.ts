@@ -38,6 +38,8 @@ export class UserEntity implements Users {
   isAccepted: boolean;
   studentId: number;
   studentName: string;
+  korean: string;
+  english: string;
 
   birth: Date;
   createdAt: Date;

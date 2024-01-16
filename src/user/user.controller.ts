@@ -135,4 +135,30 @@ export class UserController {
   async allowUser(@Body() body) {
     return this.userService.allowUser(body);
   }
+
+  @UseGuards(BearerTokenGuard)
+  @Get("/member")
+  @ApiOperation({
+    summary: "승인 유저 조회",
+  })
+  @ApiOkResponse({
+    description: "승인 유저 조회 성공",
+  })
+  @ApiBearerTokenHeader()
+  async getMember() {
+    return this.userService.getMember();
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Put("/member")
+  @ApiOperation({
+    summary: "유저 정보 수정",
+  })
+  @ApiOkResponse({
+    description: "유저 정보 수정 성공",
+  })
+  @ApiBearerTokenHeader()
+  async updateMember(@Body() body) {
+    return this.userService.updateMember(body);
+  }
 }

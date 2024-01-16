@@ -23,6 +23,8 @@ model Users {
   motto         String    @default("")
   role          String
   studentName   String    @default("")
+  korean        String    @default("")
+  english       String    @default("")
   isAccepted    Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
