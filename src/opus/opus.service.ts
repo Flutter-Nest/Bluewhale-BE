@@ -84,7 +84,6 @@ export class OpusService {
   async createOpus(userId: number, body, files) {
     const awsFileKey = `file`;
     const uploadedFiles = await this.s3Service.uploadFile(awsFileKey, files);
-
     const grade = +body.grade;
     const { subjectId, title, content, opusUrl, className, date, time } = body;
 
@@ -102,16 +101,22 @@ export class OpusService {
 
     const studentIdArray = students.map((student) => student.userId);
     const opusData = studentIdArray.map((studentId) => ({
-      subjectId,
+      subjectId: +subjectId,
       title,
       content,
       opusUrl,
       grade,
       className,
       date: isoDate,
-      time,
+      time: +time,
       teacherId: userId,
       studentId,
+      fileName0: uploadedFiles[0]?.filename ?? "",
+      fileUrl0: uploadedFiles[0]?.url ?? "",
+      fileName1: uploadedFiles[1]?.filename ?? "",
+      fileUrl1: uploadedFiles[1]?.url ?? "",
+      fileName2: uploadedFiles[2]?.filename ?? "",
+      fileUrl2: uploadedFiles[2]?.url ?? "",
     }));
 
     const result = await this.prisma.opus.createMany({

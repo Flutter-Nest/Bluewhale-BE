@@ -47,8 +47,7 @@ export class OpusController {
   async createOpus(
     @Req() req,
     @Body() body,
-    @UploadedFiles(new ParseFilePipe({}))
-    files: Express.Multer.File[]
+    @UploadedFiles() files?: Express.Multer.File[]
   ) {
     return this.opusService.createOpus(req.user.userId, body, files);
   }
