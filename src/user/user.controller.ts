@@ -109,4 +109,30 @@ export class UserController {
   ) {
     return this.userService.updateProfileImage(req.user.userId, file);
   }
+
+  @UseGuards(BearerTokenGuard)
+  @Get("/approve")
+  @ApiOperation({
+    summary: "미승인 유저 조회",
+  })
+  @ApiOkResponse({
+    description: "미승인 유저 조회 성공",
+  })
+  @ApiBearerTokenHeader()
+  async notAllowedUser() {
+    return this.userService.notAllowedUser();
+  }
+
+  @UseGuards(BearerTokenGuard)
+  @Put("/approve")
+  @ApiOperation({
+    summary: "미승인 유저 승인",
+  })
+  @ApiOkResponse({
+    description: "미승인 유저 승인 성공",
+  })
+  @ApiBearerTokenHeader()
+  async allowUser(@Body() body) {
+    return this.userService.allowUser(body);
+  }
 }

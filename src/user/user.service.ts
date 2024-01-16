@@ -130,4 +130,27 @@ export class UserService {
 
     return { message: "Profile image updated successfully." };
   }
+
+  async notAllowedUser() {
+    const result = await this.prisma.users.findMany({
+      where: { isAccepted: false },
+    });
+    return result;
+  }
+
+  async allowUser(body) {
+    const { userId, grade, className, school } = body;
+
+    const result = await this.prisma.users.update({
+      where: { userId },
+      data: {
+        grade,
+        className,
+        school,
+        isAccepted: true,
+      },
+    });
+
+    return result;
+  }
 }
