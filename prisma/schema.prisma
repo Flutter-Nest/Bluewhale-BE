@@ -23,8 +23,8 @@ model Users {
   motto         String    @default("")
   role          String
   studentName   String    @default("")
-  korean        String    @default("")
-  english       String    @default("")
+  koreanClassName        String    @default("")
+  englishClassName       String    @default("")
   isAccepted    Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -122,31 +122,33 @@ model Interviews {
 }
 
 model Opus {
-  opusId       Int        @id @default(autoincrement()) @map("id")
-  subjectId    Int
-  studentId    Int
-  teacherId    Int
-  title        String
-  content      String?
-  opusUrl      String?
-  grade        Int
-  className    String
-  date         DateTime
-  time         Int
-  fileName0    String     @default("")
-  fileUrl0     String     @default("")
-  fileName1    String     @default("")
-  fileUrl1     String     @default("")
-  fileName2    String     @default("")
-  fileUrl2     String     @default("")
+  opusId           Int        @id @default(autoincrement()) @map("id")
+  subjectId        Int
+  studentId        Int
+  teacherId        Int
+  title            String     @default("")
+  content          String     @default("")
+  opusUrl          String     @default("")
+  grade            Int
+  className        String
+  koreanClassName  String     @default("")
+  englishClassName String     @default("")
+  date             DateTime
+  time             Int
+  fileName0        String     @default("")
+  fileUrl0         String     @default("")
+  fileName1        String     @default("")
+  fileUrl1         String     @default("")
+  fileName2        String     @default("")
+  fileUrl2         String     @default("")
 
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  deletedAt    DateTime? 
-
-  Subject      Subjects   @relation(fields: [subjectId], references: [subjectId])
-  Student      Users      @relation("StudentOpus", fields: [studentId], references: [userId])
-  Teacher      Users      @relation("TeacherOpus", fields: [teacherId], references: [userId])
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  deletedAt        DateTime? 
+    
+  Subject          Subjects   @relation(fields: [subjectId], references: [subjectId])
+  Student          Users      @relation("StudentOpus", fields: [studentId], references: [userId])
+  Teacher          Users      @relation("TeacherOpus", fields: [teacherId], references: [userId])
 
 } 
 
@@ -192,14 +194,16 @@ model Attendances{
 }
 
 model Notifications{
-  notificationId  Int         @id @default(autoincrement()) @map("id")
-  isRead          Boolean     @default(false)
-  title           String
-  content         String
-  grade           Int
-  className       String
-  createdAt       DateTime    @default(now())
+  notificationId   Int         @id @default(autoincrement()) @map("id")
+  isRead           Boolean     @default(false)
+  title            String
+  content          String
+  grade            Int
+  className        String      @default("")
+  koreanClassName  String      @default("")
+  englishClassName String      @default("")
+  createdAt        DateTime    @default(now())
 
-  userId          Int
-  User            Users       @relation(fields: [userId], references: [userId])
+  userId           Int
+  User             Users       @relation(fields: [userId], references: [userId])
 }
