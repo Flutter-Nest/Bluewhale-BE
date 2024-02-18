@@ -74,4 +74,51 @@ export class ConsultingService {
 
     return result;
   }
+
+  async fetchStudentConsultings(studentId: number) {
+    const rawResult = await this.prisma.consultings.findMany({
+      where: {
+        studentId: studentId,
+      },
+      select: {
+        consultingId: true,
+        Consultant: true,
+        Student: true,
+        content: true,
+        startDate: true,
+        endDate: true,
+        createdAt: true,
+        isRead: true,
+        ConsultingComments: {
+          include: {
+            Users: true,
+          },
+        },
+      },
+    });
+
+    const result = rawResult.map((result) => ({
+      consultingId: result.consultingId,
+      isRead: result.isRead,
+      consultant: result.Consultant.userName,
+      student: result.Student.userName,
+      grade: result.Student.grade,
+      className: result.Student.className,
+      content: result.content,
+      startDate: result.startDate,
+      endDate: result.endDate,
+      createdAt: result.createdAt,
+      comments: result.ConsultingComments.map((comment) => ({
+        consultingCommentId: comment.consultingCommentId,
+        consultingId: comment.consultingId,
+        userId: comment.userId,
+        userName: comment.Users.userName,
+        profileUrl: comment.Users.profileUrl,
+        content: comment.content,
+        createdAt: comment.createdAt,
+      })),
+    }));
+
+    return result;
+  }
 }

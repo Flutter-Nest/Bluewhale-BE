@@ -42,6 +42,8 @@ export class OpusService {
         content: true,
         grade: true,
         className: true,
+        englishClassName: true,
+        koreanClassName: true,
         time: true,
         opusUrl: true,
         fileName0: true,

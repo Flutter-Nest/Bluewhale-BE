@@ -41,4 +41,17 @@ export class ConsultingController {
   async fetchConsultings(@Req() req) {
     return this.consultingService.fetchConsultings(req.user);
   }
+
+  @UseGuards(BearerTokenGuard)
+  @Get()
+  @ApiOperation({
+    summary: "컨설팅 메시지 전체 조회",
+  })
+  @ApiOkResponse({
+    description: "컨설팅 메시지 조회 성공",
+  })
+  @ApiBearerTokenHeader()
+  async fetchStudentConsultings(@Query("studentId") studentId) {
+    return this.consultingService.fetchStudentConsultings(studentId);
+  }
 }

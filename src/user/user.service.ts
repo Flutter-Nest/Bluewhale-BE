@@ -139,7 +139,14 @@ export class UserService {
   }
 
   async allowUser(body) {
-    const { userId, grade, className, school, korean, english } = body;
+    const {
+      userId,
+      grade,
+      className,
+      school,
+      koreanClassName,
+      englishClassName,
+    } = body;
 
     const result = await this.prisma.users.update({
       where: { userId },
@@ -147,8 +154,8 @@ export class UserService {
         grade,
         className: className.toUpperCase(),
         school,
-        korean: korean.toUpperCase(),
-        english: english.toUpperCase(),
+        koreanClassName: koreanClassName.toUpperCase(),
+        englishClassName: englishClassName.toUpperCase(),
         isAccepted: true,
       },
     });
@@ -164,7 +171,14 @@ export class UserService {
   }
 
   async updateMember(body) {
-    const { userId, grade, className, school, korean, english } = body;
+    const {
+      userId,
+      grade,
+      className,
+      school,
+      koreanClassName,
+      englishClassName,
+    } = body;
 
     const result = await this.prisma.users.update({
       where: { userId },
@@ -172,8 +186,8 @@ export class UserService {
         grade,
         className: className.toUpperCase(),
         school,
-        korean: korean.toUpperCase(),
-        english: english.toUpperCase(),
+        koreanClassName: koreanClassName.toUpperCase(),
+        englishClassName: englishClassName.toUpperCase(),
       },
     });
 
