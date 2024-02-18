@@ -31,6 +31,7 @@ async function bootstrap() {
       process.env.CLIENT_URL || `http://localhost:3001`,
       `http://localhost:3000`,
       "https://bw-admin.vercel.app",
+      "https://admindev.bluewhale-link.com",
     ],
     credentials: true,
   });
